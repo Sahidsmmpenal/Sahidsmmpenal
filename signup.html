@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+background:linear-gradient(135deg,#4facfe,#00f2fe,#43e97b);
+}
+
+.container{
+width:350px;
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+text-align:center;
+}
+
+h2{
+margin-bottom:20px;
+color:#333;
+}
+
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:10px;
+background:#f2f2f2;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:14px;
+margin-top:15px;
+border:none;
+border-radius:10px;
+background:#007bff;
+color:white;
+font-size:18px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#0056b3;
+}
+
+p{
+margin-top:15px;
+font-size:14px;
+}
+
+a{
+text-decoration:none;
+color:#007bff;
+font-weight:bold;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h2>Create Account</h2>
+
+<input type="text" placeholder="First Name">
+
+<input type="text" placeholder="Last Name">
+
+<input type="text" placeholder="Username">
+
+<input type="password" placeholder="Password">
+
+<input type="password" placeholder="Confirm Password">
+
+<button onclick="window.location.href='dashboard.html'">
+Create Account
+</button>
+
+<p>Already have an account?
+<a href="#">Login</a>
+</p>
+
+</div>
+
+</body>
+  </html>
