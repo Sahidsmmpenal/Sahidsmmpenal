@@ -88,16 +88,45 @@ font-weight:bold;
 <input type="password" placeholder="Password">
 
 <input type="password" placeholder="Confirm Password">
-
+<button id="googleLogin" class="google-btn">
+  <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20">
+  Sign up with Google
+</button>
 <button onclick="window.location.href='home.html'">
-Create Account
-</button href='home.html'">
+    Create Account
+</button>
 
 <p>Already have an account?
 <a href="#">Login</a>
 </p>
 
 </div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyBELsMTiY8OqZE5zJqwUThrfUCSu13gG7U",
+  authDomain: "sahidsmmpenal.firebaseapp.com",
+  projectId: "sahidsmmpenal",
+  storageBucket: "sahidsmmpenal.firebasestorage.app",
+  messagingSenderId: "278872394021",
+  appId: "1:278872394021:web:0309da42a62c36195472cc",
+  measurementId: "G-B17NWVEBP3"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+document.getElementById("googleLogin").addEventListener("click", async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    alert("Welcome " + result.user.displayName);
+  } catch (error) {
+    alert(error.message);
+  }
+});
+</script>
 </body>
   </html>
