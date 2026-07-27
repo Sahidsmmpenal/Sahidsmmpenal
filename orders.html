@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History - Shahid SMM Panel</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .orders-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #171336;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #28245c;
+            font-size: 14px;
+        }
+        th {
+            background: #0d0b21;
+            color: #ffd700;
+        }
+        .status-completed {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        .status-pending {
+            color: #f39c12;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="orders-container">
+        <h2>Order History</h2>
+        <p style="color: #a0a0a0; font-size: 14px;">Track all your previous SMM service orders here</p>
+        
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Service Name</th>
+                        <th>Link</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#1001</td>
+                        <td>Instagram Views (₹0.20 / 1k)</td>
+                        <td>instagram.com/p/example</td>
+                        <td>5000</td>
+                        <td><span class="status-completed">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td>#1002</td>
+                        <td>Instagram Followers (Non-Drop)</td>
+                        <td>instagram.com/username</td>
+                        <td>1000</td>
+                        <td><span class="status-pending">Processing</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
