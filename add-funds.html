@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Funds - Shahid SMM Panel</title>
+    <style>
+        body {
+            background-color: #0d0b21;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background: #171336;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #28245c;
+        }
+        .nav-brand {
+            color: #ff4757;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .fund-container {
+            max-width: 500px;
+            margin: 30px auto;
+            background: #171336;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border: 1px solid #28245c;
+        }
+        .form-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            color: #a0a0a0;
+            font-size: 13px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            background: #0d0b21;
+            border: 1px solid #28245c;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .instruction-box {
+            background: #120f2b;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #ccc;
+            margin-bottom: 18px;
+            border-left: 3px solid #ff4757;
+            line-height: 1.5;
+        }
+        .btn-pay {
+            background: #2ed573;
+            color: #fff;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-pay:hover { background: #26af5f; }
+        #qr-box {
+            display: none;
+            margin-top: 20px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            color: #000;
+            text-align: center;
+        }
+        #qr-box img { width: 200px; height: 200px; }
+        .upi-text {
+            background: #f1f2f6;
+            color: #333;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 13px;
+            margin-top: 10px;
+            border: 1px dashed #ccc;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="nav-brand">👑 CHEAPEST SMMPANELS</div>
+        <a href="dashboard.html" style="color: #fff; text-decoration: none; font-size: 14px;">← Back</a>
+    </div>
+
+    <div class="fund-container">
+        <h2 style="margin-top: 0; color: #fff; font-size: 18px;">Add Funds via UPI</h2>
+        
+        <div class="form-group">
+            <label>Method</label>
+            <select>
+                <option>UPI / Paytm / GPay / PhonePe / FamPay</option>
+            </select>
+        </div>
+
+        <div class="instruction-box">
+            <strong>Steps To Add Funds :-</strong><br>
+            1. Enter Amount and Phone Number.<br>
+            2. Click on 'Pay Now' to generate QR Code.<br>
+            3. Scan and pay using any UPI app to: <b>9749401427@fam</b><br>
+            4. Click 'I Have Paid' after successful transaction.
+        </div>
+
+        <div class="form-group">
+            <label>Amount (₹)</label>
+            <input type="number" id="fund-amount" placeholder="Enter amount">
+        </div>
+
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" id="phone-number" placeholder="Enter your phone number">
+        </div>
+
+        <button class="btn-pay" onclick="generateQR()">Pay Now</button>
+
+        <div id="qr-box">
+            <h3 style="margin-top: 0; color: #333;">Scan to Pay</h3>
+            <div id="qr-code-img"></div>
+            <div class="upi-text" id="upi-display-id">UPI ID: 9749401427@fam</div>
+            <p id="qr-details" style="font-weight: bold; margin: 10px 0 0 0; color: #333;"></p>
+            <button onclick="paymentSuccess()" style="margin-top: 15px; background: #6c5ce7; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">I Have Paid (Verify)</button>
+        </div>
+    </div>
+
+    <script>
+        function generateQR() {
+            const amountInput = document.getElementById("fund-amount").value;
+            const phoneInput = document.getElementById("phone-number").value;
+
+            if(!amountInput || !phoneInput) {
+                alert("Please enter both amount and phone number!");
+                return;
+            }
+
+            const merchantUpi = "9749401427@fam";
+            let upiUrl = `upi://pay?pa=${merchantUpi}&pn=ShahidSMM&am=${amountInput}&cu=INR`;
+            let qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
+
+            document.getElementById("qr-code-img").innerHTML = `<img src="${qrApi}" alt="UPI QR">`;
+            document.getElementById("qr-details").innerHTML = `Amount: ₹${amountInput} | Phone: ${phoneInput}`;
+            document.getElementById("qr-box").style.display = "block";
+        }
+
+        function paymentSuccess() {
+            const amountInput = document.getElementById("fund-amount").value;
+            alert("Payment verification initiated for ₹" + amountInput + "! Balance will reflect shortly.");
+            window.location.href = "dashboard.html";
+        }
+    </script>
+</body>
+</html>
