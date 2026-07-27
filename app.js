@@ -78,3 +78,33 @@ signupBtn.addEventListener("click", async () => {
   }
 
 });
+
+googleLogin.addEventListener("click", async () => {
+  try {
+
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    const username =
+      (user.displayName || "user")
+        .toLowerCase()
+        .replace(/\s+/g, "") +
+      Math.floor(Math.random() * 9000 + 1000);
+
+    await setDoc(doc(db, "users", user.uid), {
+      uid: user.uid,
+      name: user.displayName || "",
+      email: user.email || "",
+      username: username,
+      balance: 0,
+      photoURL: user.photoURL || "",
+      createdAt: new Date().toISOString()
+    }, { merge: true });
+
+    window.location.href = "home.html";
+
+  } catch (error) {
+    alert(error.message);
+    console.error(error);
+  }
+});
