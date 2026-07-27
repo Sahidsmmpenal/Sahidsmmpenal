@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SAHID SMM PANEL</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+
+background:linear-gradient(135deg,#2563eb,#0ea5e9);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+height:100vh;
+
+padding:20px;
+
+}
+
+.container{
+
+width:100%;
+
+max-width:420px;
+
+background:#fff;
+
+border-radius:20px;
+
+padding:35px;
+
+box-shadow:0 20px 60px rgba(0,0,0,.25);
+
+}
+
+.logo{
+
+text-align:center;
+
+font-size:30px;
+
+font-weight:700;
+
+color:#2563eb;
+
+margin-bottom:10px;
+
+}
+
+.subtitle{
+
+text-align:center;
+
+color:#666;
+
+margin-bottom:30px;
+
+}
+
+.input-box{
+
+margin-bottom:18px;
+
+}
+
+.input-box label{
+
+display:block;
+
+font-size:14px;
+
+margin-bottom:6px;
+
+font-weight:600;
+
+}
+
+.input-box input{
+
+width:100%;
+
+padding:14px;
+
+border:1px solid #ddd;
+
+border-radius:10px;
+
+font-size:15px;
+
+outline:none;
+
+}
+
+.input-box input:focus{
+
+border-color:#2563eb;
+
+}
+
+.btn{
+
+width:100%;
+
+padding:15px;
+
+background:#2563eb;
+
+border:none;
+
+border-radius:10px;
+
+font-size:17px;
+
+font-weight:600;
+
+color:white;
+
+cursor:pointer;
+
+margin-top:10px;
+
+}
+
+.google-btn{
+
+width:100%;
+
+padding:15px;
+
+background:white;
+
+border:1px solid #ddd;
+
+border-radius:10px;
+
+font-size:16px;
+
+font-weight:600;
+
+cursor:pointer;
+
+margin-top:15px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:10px;
+
+}
+
+.footer{
+
+margin-top:20px;
+
+text-align:center;
+
+font-size:14px;
+
+}
+
+.footer a{
+
+text-decoration:none;
+
+color:#2563eb;
+
+font-weight:600;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">
+
+SAHID SMM PANEL
+
+</div>
+
+<div class="subtitle">
+
+Create Your Account
+
+</div>
+
+<div class="input-box">
+
+<label>Full Name</label>
+
+<input type="text" id="name">
+
+</div>
+
+<div class="input-box">
+
+<label>Email</label>
+
+<input type="email" id="email">
+
+</div>
+
+<div class="input-box">
+
+<label>Password</label>
+
+<input type="password" id="password">
+
+</div>
+
+<button class="btn" id="signupBtn">
+
+Create Account
+
+</button>
+
+<button class="google-btn" id="googleLogin">
+
+<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="22">
+
+Continue with Google
+
+</button>
+
+<div class="footer">
+
+Already have an account?
+
+<a href="index.html">
+
+Login
+
+</a>
+
+</div>
+
+</div>
+
+</body>
+
+</html>
