@@ -124,7 +124,11 @@ document.getElementById("googleLogin").addEventListener("click", async () => {
     const result = await signInWithPopup(auth, provider);
     alert("Welcome " + result.user.displayName);
   } catch (error) {
-    alert(error.message);
+    console.log(error);
+    alert(
+      "Code: " + error.code + "\n\n" +
+      "Message: " + error.message
+    );
   }
 });
 </script>
