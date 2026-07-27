@@ -126,7 +126,8 @@ const db = getFirestore(app);
 document.getElementById("googleLogin").addEventListener("click", async () => {
   try {
   console.log("Google button clicked");
-
+alert("Popup opening...");
+    
   const result = await signInWithPopup(auth, provider);
 
 const user = result.user;
