@@ -4,118 +4,175 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Funds - Shahid SMM Panel</title>
-    <link rel="stylesheet" href="style.css">
     <style>
+        body {
+            background-color: #0d0b21;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background: #171336;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #28245c;
+        }
+        .nav-brand {
+            color: #ff4757;
+            font-weight: bold;
+            font-size: 16px;
+        }
         .fund-container {
             max-width: 500px;
-            margin: 40px auto;
+            margin: 30px auto;
             background: #171336;
-            padding: 30px;
+            padding: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            text-align: center;
+            border: 1px solid #28245c;
         }
-        .form-row {
-            margin-bottom: 20px;
+        .form-group {
+            margin-bottom: 18px;
             text-align: left;
         }
-        .form-row label {
+        .form-group label {
             display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
+            color: #a0a0a0;
+            font-size: 13px;
+            margin-bottom: 6px;
+            font-weight: bold;
         }
-        .form-row input {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 12px;
-            border-radius: 6px;
-            border: 1px solid #28245c;
             background: #0d0b21;
-            color: white;
+            border: 1px solid #28245c;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
             box-sizing: border-box;
         }
-        .qr-box {
+        .instruction-box {
+            background: #120f2b;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #ccc;
+            margin-bottom: 18px;
+            border-left: 3px solid #ff4757;
+            line-height: 1.5;
+        }
+        .btn-pay {
+            background: #2ed573;
+            color: #fff;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-pay:hover { background: #26af5f; }
+        #qr-box {
+            display: none;
             margin-top: 20px;
-            background: #0d0b21;
+            background: #fff;
             padding: 20px;
             border-radius: 8px;
-            display: inline-block;
+            color: #000;
+            text-align: center;
         }
-        .qr-box img {
-            width: 180px;
-            height: 180px;
-            border-radius: 4px;
+        #qr-box img { width: 200px; height: 200px; }
+        .upi-text {
+            background: #120f2b;
+            color: #ffd700;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 13px;
+            margin-top: 10px;
+            border: 1px dashed #28245c;
         }
     </style>
 </head>
 <body>
 
+    <div class="navbar">
+        <div class="nav-brand">👑 CHEAPEST SMMPANELS</div>
+        <a href="dashboard.html" style="color: #fff; text-decoration: none; font-size: 14px;">← Back</a>
+    </div>
+
     <div class="fund-container">
-        <h2>Add Funds to Wallet</h2>
-        <p style="color: #a0a0a0; font-size: 14px;">Pay instantly and top up your account balance</p>
+        <h2 style="margin-top: 0; color: #fff; font-size: 18px;">Add Funds via UPI</h2>
         
-        <div class="form-row">
+        <div class="form-group">
+            <label>Method</label>
+            <select>
+                <option>UPI / Paytm / GPay / PhonePe / FamPay</option>
+            </select>
+        </div>
+
+        <div class="instruction-box">
+            <strong>Steps To Add Funds :-</strong><br>
+            1. Enter Amount and Phone Number.<br>
+            2. Click on 'Pay' to generate QR Code.<br>
+            3. Scan and pay using any UPI app to: <b>9749401427@fam</b><br>
+            4. Click 'I Have Paid' after successful transaction.
+        </div>
+
+        <div class="form-group">
             <label>Amount (₹)</label>
             <input type="number" id="fund-amount" placeholder="Enter amount">
         </div>
 
-        <button class="btn" onclick="showQRCode()">Generate QR / Pay</button>
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" id="phone-number" placeholder="Enter your phone number">
+        </div>
 
-        <!-- কিউআর কোড দেখানোর সেকশন -->
-        <div id="qr-section" style="display: none;" class="qr-box">
-            <p style="margin-top: 0; color: #ffd700;">Scan to Pay</p>
-            <img src="31711.png" alt="Payment QR">
-            <p style="font-size: 12px; color: #a0a0a0; margin-bottom: 0;">Scan this with any UPI App</p>
+        <button class="btn-pay" onclick="generateQR()">Pay Now</button>
+
+        <!-- QR Code Result Section -->
+        <div id="qr-box">
+            <h3 style="margin-top: 0; color: #333;">Scan to Pay</h3>
+            <div id="qr-code-img"></div>
+            <div class="upi-text" id="upi-display-id" style="color: #000; font-weight: bold;"></div>
+            <p id="qr-details" style="font-weight: bold; margin: 10px 0 0 0; color: #333;"></p>
+            <button onclick="paymentSuccess()" style="margin-top: 15px; background: #6c5ce7; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">I Have Paid (Verify)</button>
         </div>
     </div>
 
     <script>
-        function showQRCode() {
-            let amount = document.getElementById('fund-amount').value;
-            if(amount && amount > 0) {
-                document.getElementById('qr-section').style.display = 'block';
-            } else {
-                alert("Please enter a valid amount!");
+        const merchantUpi = "9749401427@fam";
+
+        function generateQR() {
+            const amount = document.getElementById("fund-amount").value;
+            const phone = document.getElementById("phone-number").value;
+
+            if(!amount || !phone) {
+                alert("Please enter both amount and phone number!");
+                return;
             }
+
+            // Creating UPI Intent string with your exact UPI ID and requested amount
+            let upiUrl = `upi://pay?pa=${merchantUpi}&pn=ShahidSMM&am=${amount}&cu=INR`;
+            let qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
+
+            document.getElementById("qr-code-img").innerHTML = `<img src="${qrApi}" alt="UPI QR">`;
+            document.getElementById("upi-display-id.innerHTML = `UPI ID: ${merchantUpi}`;
+            document.getElementById("qr-details").innerHTML = `Amount: ₹${amount} | Phone: ${phone}`;
+            document.getElementById("qr-box").style.display = "block";
+        }
+
+        function paymentSuccess() {
+            const amount = document.getElementById("fund-amount").value;
+            // Here you can integrate Firebase balance update logic if needed
+            alert("Payment verification initiated for ₹" + amount + "! Balance will reflect shortly.");
+            window.location.href = "dashboard.html";
         }
     </script>
 </body>
-    <!-- Navbar HTML -->
-<div class="navbar">
-    <div class="nav-brand">Shahid SMM Panel</div>
-    <div class="nav-links">
-        <a href="dashboard.html">New Order</a>
-        <a href="orders.html">Orders</a>
-        <a href="add-funds.html">Add Funds</a>
-        <a href="index.html" style="color: #ff4d4d;">Logout</a>
-    </div>
-</div>
-
-<style>
-    /* Navbar CSS (Include this in style.css) */
-    .navbar {
-        background: #171336;
-        padding: 15px 30px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #28245c;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    }
-    .nav-brand {
-        color: #ffd700;
-        font-weight: bold;
-        font-size: 18px;
-    }
-    .nav-links a {
-        color: #ffffff;
-        text-decoration: none;
-        margin-left: 20px;
-        font-size: 14px;
-        transition: color 0.3s;
-    }
-    .nav-links a:hover {
-        color: #ffd700;
-    }
-</style>
-    
 </html>
