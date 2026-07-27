@@ -1,0 +1,8 @@
+document.addEventListener("DOMContentLoaded", () => {
+    // Clear user session/token
+    localStorage.removeItem("userLoggedIn");
+    localStorage.removeItem("userPhone");
+    
+    // Redirect to welcome/login page
+    window.location.href = "index.html";
+});
