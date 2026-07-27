@@ -93,3 +93,50 @@ if (logoutBtn) {
   });
 
 }
+// Email Signup
+
+const signupBtn = document.getElementById("signupBtn");
+
+if (signupBtn) {
+
+signupBtn.addEventListener("click", async () => {
+
+const name = document.getElementById("name").value;
+
+const email = document.getElementById("email").value;
+
+const password = document.getElementById("password").value;
+
+try {
+
+const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+const user = userCredential.user;
+
+await setDoc(doc(db, "users", user.uid), {
+
+name: name,
+
+email: email,
+
+balance: 0,
+
+spent: 0,
+
+photo: ""
+
+});
+
+alert("Account Created Successfully!");
+
+window.location.href = "home.html";
+
+} catch (error) {
+
+alert(error.message);
+
+}
+
+});
+
+}
