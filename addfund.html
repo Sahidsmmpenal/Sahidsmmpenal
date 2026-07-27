@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Fund - SAHID SMM PANEL</title>
+    <title>Auto Add Fund - SAHID SMM PANEL</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -11,51 +11,37 @@
 <body class="smm-dark-body">
 
     <div class="smm-container">
-        <div class="payment-card" id="paymentFormBox">
-            <div class="form-group">
-                <label>Method</label>
-                <div class="method-select-box">
-                    <span>UPI / QR Auto Payment</span>
-                </div>
-            </div>
-
-            <div class="instruction-box">
-                <p class="instruction-title">Instruction</p>
-                <p class="steps-heading">Steps To Add Funds :-</p>
-                <ol>
-                    <li>Enter Amount</li>
-                    <li>Enter Phone Number</li>
-                    <li>Click on Pay to generate QR</li>
-                </ol>
-                <p class="qr-note">Scan the QR code with any UPI app (GPay, PhonePe, Paytm, etc.). Once paid, funds will be added automatically.</p>
-            </div>
-
-            <form id="addFundForm">
+        <div class="payment-card" id="formCard">
+            <h3>Add Funds via UPI QR</h3>
+            <form id="paymentForm">
                 <div class="form-group">
                     <label>Amount (₹)</label>
-                    <input type="number" id="fundAmount" placeholder="Enter amount" required min="1">
+                    <input type="number" id="amount" placeholder="Enter amount" required min="1">
                 </div>
-
                 <div class="form-group">
-                    <label>Phone</label>
-                    <input type="tel" id="fundPhone" placeholder="Enter phone number" required>
+                    <label>Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Enter phone number" required>
                 </div>
-
-                <button type="submit" class="pay-btn" id="payBtn">Pay & Generate QR</button>
+                <button type="submit" class="pay-btn">Proceed to Pay</button>
             </form>
         </div>
 
-        <div class="payment-card" id="qrDisplayBox" style="display: none; text-align: center;">
-            <h3>Scan & Pay</h3>
-            <p>Amount: <strong id="displayAmount">₹0</strong></p>
+        <div class="payment-card" id="qrCard" style="display: none; text-align: center;">
+            <h3>Scan QR to Pay</h3>
+            <p>Amount to Pay: <strong id="showAmount" style="color: #28a745; font-size: 18px;">₹0</strong></p>
             
-            <div id="qrcode" style="display: inline-block; padding: 10px; background: #fff; margin: 15px 0;"></div>
+            <div id="qrcode" style="display: inline-block; padding: 15px; background: #fff; border-radius: 10px; margin: 15px 0;"></div>
             
-            <p class="timer-text">Waiting for payment confirmation... <span id="timer">05:00</span></p>
-            <button type="button" class="pay-btn" id="cancelQrBtn" style="background-color: #d9534f;">Cancel / Back</button>
+            <p class="instruction-note">Please scan with any UPI app (GPay, PhonePe, Paytm). Payment will be verified automatically!</p>
+            
+            <div class="spinner-border text-primary" role="status">
+                <span class="loading-text">Waiting for payment confirmation... (<span id="countdown">300</span>s)</span>
+            </div>
+            
+            <button type="button" class="pay-btn" id="cancelBtn" style="background: #dc3545; margin-top: 15px;">Cancel</button>
         </div>
     </div>
 
-    <script src="payment.js"></script>
+    <script src="auto-pay.js"></script>
 </body>
 </html>
