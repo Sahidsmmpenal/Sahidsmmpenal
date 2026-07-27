@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sahidsmmpenal - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Social Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="smm-container">
+        <!-- Top Announcement Bar -->
+        <div class="announcement-bar">
+            <span>📢 OUR BELIEVE - QUALITY OVER QUANTITY 👆</span>
+        </div>
+
+        <!-- User Profile & Balance Cards -->
+        <div class="user-card">
+            <div class="user-info">
+                <i class="fa-solid fa-b"></i>
+                <span id="usernameDisplay">sm8237715</span>
+            </div>
+            <p class="welcome-text">Welcome to panel!</p>
+        </div>
+
+        <div class="balance-grid">
+            <div class="b-card">
+                <i class="fa-solid fa-chart-line"></i>
+                <div>
+                    <h3>₹0</h3>
+                    <p>Spent balance</p>
+                </div>
+            </div>
+            <div class="b-card">
+                <i class="fa-solid fa-wallet"></i>
+                <div>
+                    <h3>₹0</h3>
+                    <p>To Add more Fund <a href="addfund.html">CLICK HERE</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toggle Info Section -->
+        <div class="info-toggle-box">
+            <span>THINGS TO BE KNOWN BEFORE PLACING ORDER</span>
+            <i class="fa-solid fa-plus"></i>
+        </div>
+
+        <!-- Social Media Quick Icons Grid -->
+        <div class="social-icons-grid">
+            <button class="soc-btn"><i class="fa-solid fa-bars"></i></button>
+            <button class="soc-btn"><i class="fa-brands fa-telegram"></i></button>
+            <button class="soc-btn"><i class="fa-brands fa-spotify"></i></button>
+            <button class="soc-btn"><i class="fa-brands fa-instagram"></i></button>
+            <button class="soc-btn"><i class="fa-brands fa-x-twitter"></i></button>
+            <button class="soc-btn"><i class="fa-brands fa-facebook"></i></button>
+            <button class="soc-btn"><i class="fa-brands fa-tiktok"></i></button>
+            <button class="soc-btn"><i class="fa-brands fa-youtube"></i></button>
+            <button class="soc-btn"><i class="fa-brands fa-apple"></i></button>
+            <button class="soc-btn"><i class="fa-brands fa-snapchat"></i></button>
+            <button class="soc-btn"><i class="fa-brands fa-twitch"></i></button>
+            <button class="soc-btn"><i class="fa-solid fa-star"></i></button>
+            <button class="soc-btn"><i class="fa-solid fa-plus"></i></button>
+        </div>
+
+        <!-- Order Form Box -->
+        <div class="order-form-box">
+            <form id="orderForm">
+                <div class="input-group">
+                    <input type="text" placeholder="🔍 Search" class="search-input">
+                </div>
+
+                <div class="input-group">
+                    <label>Category</label>
+                    <select id="categorySelect" required>
+                        <option value="">▼▼ INSTAGRAM FOLLOWERS [Guaranteed] ▼▼</option>
+                        <option value="ig-likes">Instagram Likes</option>
+                        <option value="fb-services">Facebook Services</option>
+                        <option value="tg-services">Telegram Services</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Service</label>
+                    <select id="serviceSelect" required>
+                        <option value="">4180 - Instagram Followers [Speed - 200K/Day]</option>
+                    </select>
+                </div>
+
+                <!-- Service Description Card -->
+                <div class="service-description">
+                    <p><strong>Description</strong></p>
+                    <p>❤️ Start: 0-1 hour</p>
+                    <p>⚡ Speed: 200K+/Day</p>
+                    <p>⭐ Quality: Worldwide</p>
+                    <p>♻️ Refill: 90Days</p>
+                    <p>⚠️ Note - speed can be fluctuate as per the load on the server</p>
+                </div>
+
+                <div class="input-group">
+                    <label>Link</label>
+                    <input type="url" placeholder="Link" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Quantity</label>
+                    <input type="number" placeholder="Quantity" min="20" max="1000000" required>
+                    <small class="min-max-text">Min: 20 - Max: 1 000 000</small>
+                </div>
+
+                <div class="input-group">
+                    <label>Average time</label>
+                    <input type="text" value="41 hours 5 minutes" readonly class="readonly-input">
+                </div>
+
+                <div class="input-group">
+                    <label>Charge</label>
+                    <input type="text" value="₹0.00" readonly class="readonly-input">
+                </div>
+
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Icon -->
+    <div class="whatsapp-float">
+        <i class="fa-brands fa-whatsapp"></i>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
