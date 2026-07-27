@@ -121,14 +121,19 @@ const provider = new GoogleAuthProvider();
 
 document.getElementById("googleLogin").addEventListener("click", async () => {
   try {
-    const result = await signInWithPopup(auth, provider);
-    alert("Welcome " + result.user.displayName);
-  } catch (error) {
-    console.log(error);
-    alert(
-      "Code: " + error.code + "\n\n" +
-      "Message: " + error.message
-    );
+  console.log("Google button clicked");
+
+  const result = await signInWithPopup(auth, provider);
+
+  console.log(result);
+
+  alert("Welcome " + result.user.displayName);
+} catch (error) {
+  console.log(error);
+  alert(
+    "Code: " + error.code + "\n\n" +
+    "Message: " + error.message
+  );
   }
 });
 </script>
