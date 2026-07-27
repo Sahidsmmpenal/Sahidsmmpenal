@@ -33,3 +33,48 @@ const googleLogin = document.getElementById("googleLogin");
 const name = document.getElementById("name");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
+signupBtn.addEventListener("click", async () => {
+
+  if (
+    name.value.trim() === "" ||
+    email.value.trim() === "" ||
+    password.value.trim() === ""
+  ) {
+    alert("Please fill all fields.");
+    return;
+  }
+
+  try {
+
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email.value,
+      password.value
+    );
+
+    const user = userCredential.user;
+
+    const username =
+      name.value.trim().toLowerCase().replace(/\s+/g, "") +
+      Math.floor(Math.random() * 9000 + 1000);
+
+    await setDoc(doc(db, "users", user.uid), {
+      uid: user.uid,
+      name: name.value,
+      email: email.value,
+      username: username,
+      balance: 0,
+      createdAt: new Date().toISOString()
+    });
+
+    alert("Account created successfully!");
+
+    window.location.href = "home.html";
+
+  } catch (error) {
+
+    alert(error.message);
+
+  }
+
+});
