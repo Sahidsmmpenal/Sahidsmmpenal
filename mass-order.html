@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mass Order - Shahid SMM Panel</title>
+    <style>
+        body {
+            background-color: #0d0b21;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /* Navbar */
+        .navbar {
+            background: #171336;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #28245c;
+            position: relative;
+        }
+        .nav-brand {
+            color: #ff4757;
+            font-weight: bold;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .menu-icon {
+            font-size: 22px;
+            cursor: pointer;
+            color: #fff;
+        }
+        
+        /* Sidebar Menu Styles */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            right: 0;
+            background-color: #171336;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            border-left: 1px solid #28245c;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+        }
+        .sidebar a {
+            padding: 12px 25px;
+            text-decoration: none;
+            font-size: 15px;
+            color: #b2bec3;
+            display: block;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(40, 36, 92, 0.4);
+        }
+        .sidebar a:hover {
+            color: #ffd700;
+            background-color: #0d0b21;
+        }
+        .sidebar .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 25px;
+            border: none;
+            background: none;
+        }
+        .sidebar-balance {
+            background: #0d0b21;
+            margin: 10px 15px 20px 15px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #28245c;
+            text-align: center;
+        }
+        .sidebar-balance h4 {
+            margin: 0;
+            color: #a0a0a0;
+            font-size: 12px;
+        }
+        .sidebar-balance p {
+            margin: 5px 0 0 0;
+            color: #ffd700;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+        .page-title {
+            color: #fff;
+            font-size: 20px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #28245c;
+            padding-bottom: 10px;
+        }
+        .order-box {
+            background: #171336;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #28245c;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            color: #a0a0a0;
+            font-size: 12px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group textarea {
+            width: 100%;
+            height: 150px;
+            padding: 12px;
+            background: #0d0b21;
+            border: 1px solid #28245c;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        .btn-submit {
+            background: #28245c;
+            color: #fff;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover {
+            background: #36307a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="nav-brand">👑 CHEAPEST SMMPANELS</div>
+        <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+    </div>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleSidebar()">&times;</a>
+        
+        <div class="sidebar-balance">
+            <h4>ACCOUNT BALANCE</h4>
+            <p id="menu-balance">₹0.00</p>
+        </div>
+
+        <a href="dashboard.html">🛒 New Order</a>
+        <a href="orders.html">📦 Orders</a>
+        <a href="services.html">📋 Services</a>
+        <a href="add-funds.html">💳 Add Funds</a>
+        <a href="mass-order.html" style="color: #ffd700;">⚡ Mass Order</a>
+        <a href="referrals.html">🎁 Refer & Earn</a>
+        <a href="updates.html">🔔 Updates</a>
+        <a href="account.html">👤 Account (Add/Manage)</a>
+        <a href="#" onclick="logout()" style="color: #ff4757; font-weight: bold;">🚪 Logout</a>
+    </div>
+
+    <div class="container">
+        <div class="page-title">⚡ Mass Order</div>
+        
+        <div class="order-box">
+            <div class="form-group">
+                <label>One order per line (format: service_id|link|quantity)</label>
+                <textarea placeholder="1|https://instagram.com/p/...|1000&#10;2|https://instagram.com/p/...|500"></textarea>
+            </div>
+
+            <button class="btn-submit" onclick="alert('Mass order feature coming soon!')">Submit Mass Order</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById("mySidebar");
+            if (sidebar.style.width === "250px") {
+                sidebar.style.width = "0";
+            } else {
+                sidebar.style.width = "250px";
+            }
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDiqGuREonvLCr4I3ly0ChHzpMAbeDnrPA",
+          authDomain: "sahidsmmpenal-635b4.firebaseapp.com",
+          projectId: "sahidsmmpenal-635b4",
+          storageBucket: "sahidsmmpenal-635b4.firebasestorage.app",
+          messagingSenderId: "982748676616",
+          appId: "1:982748676616:web:a2a83d7f20734b638107bd",
+          measurementId: "G-B6EHE18EZV"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = "index.html";
+            }
+        });
+
+        window.logout = function() {
+            signOut(auth).then(() => {
+                window.location.href = "index.html";
+            });
+        }
+    </script>
+</body>
+</html>
