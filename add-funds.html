@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Funds - Shahid SMM Panel</title>
+    <style>
+        body {
+            background-color: #0d0b21;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background: #171336;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #28245c;
+        }
+        .nav-brand {
+            color: #ff4757;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .menu-icon {
+            font-size: 22px;
+            cursor: pointer;
+            color: #fff;
+        }
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            right: 0;
+            background-color: #171336;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            border-left: 1px solid #28245c;
+        }
+        .sidebar a {
+            padding: 12px 25px;
+            text-decoration: none;
+            font-size: 15px;
+            color: #b2bec3;
+            display: block;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(40, 36, 92, 0.4);
+        }
+        .sidebar a:hover {
+            color: #ffd700;
+            background-color: #0d0b21;
+        }
+        .sidebar .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 25px;
+            border: none;
+            background: none;
+        }
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+        .fund-box {
+            background: #171336;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #28245c;
+            text-align: center;
+        }
+        .page-title {
+            color: #fff;
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #28245c;
+            padding-bottom: 10px;
+            text-align: left;
+        }
+        .payment-info {
+            background: #0d0b21;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #28245c;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #ccc;
+            text-align: left;
+        }
+        .payment-info span {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        .qr-container {
+            margin: 15px 0;
+            background: #fff;
+            padding: 10px;
+            display: inline-block;
+            border-radius: 8px;
+        }
+        .qr-container img {
+            width: 180px;
+            height: 180px;
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            color: #a0a0a0;
+            font-size: 12px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: #0d0b21;
+            border: 1px solid #28245c;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .btn-submit {
+            background: #28245c;
+            color: #fff;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover {
+            background: #36307a;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #171336;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid #28245c;
+            max-width: 320px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .success-icon-circle {
+            width: 70px;
+            height: 70px;
+            background: #2ecc71;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px auto;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.4);
+        }
+        .error-icon-circle {
+            width: 70px;
+            height: 70px;
+            background: #e74c3c;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px auto;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(231, 76, 60, 0.4);
+        }
+        .modal-title {
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .modal-text {
+            color: #b2bec3;
+            font-size: 13px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .modal-btn {
+            background: #28245c;
+            color: #fff;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .modal-btn:hover {
+            background: #36307a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="nav-brand">👑 SAHID SMMPANELS</div>
+        <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+    </div>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleSidebar()">&times;</a>
+        <a href="dashboard.html">🛒 New Order</a>
+        <a href="orders.html">📦 Orders</a>
+        <a href="services.html">📋 Services</a>
+        <a href="add-funds.html" style="color: #ffd700;">💳 Add Funds</a>
+        <a href="mass-order.html">⚡ Mass Order</a>
+        <a href="referrals.html">🎁 Refer & Earn</a>
+        <a href="updates.html">🔔 Updates</a>
+        <a href="account.html">👤 Account</a>
+        <a href="#" onclick="logout()" style="color: #ff4757; font-weight: bold;">🚪 Logout</a>
+    </div>
+
+    <div class="container">
+        <div class="fund-box">
+            <div class="page-title">💳 Add Funds via Dynamic QR</div>
+            
+            <div class="payment-info">
+                <p>⚠️ কিউআর কোড স্ক্যান করে পেমেন্ট করুন এবং সঠিক অ্যামাউন্ট ও ১২ ডিজিটের UPI UTR নম্বর প্রদান করুন[span_1](start_span)[span_1](end_span).</p>
+                <p>UPI ID: <span>9749401427@fam</span></p>
+            </div>
+
+            <div class="qr-container">
+                <img id="dynamic-qr" src="" alt="Scan & Pay QR">
+            </div>
+
+            <div class="form-group">
+                <label>Amount (₹)</label>
+                <input type="number" id="fund-amount" placeholder="Enter exact amount paid" oninput="updateQRCode()">
+            </div>
+
+            <div class="form-group">
+                <label>12-Digit UPI UTR / Ref Number</label>
+                <input type="text" id="trx-id" placeholder="Enter 12-digit UTR number">
+            </div>
+
+            <button type="button" id="submit-fund-btn" class="btn-submit">I Have Paid / Submit Payment</button>
+        </div>
+    </div>
+
+    <div id="successModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="success-icon-circle">✓</div>
+            <div class="modal-title">Amount Added Successfully!</div>
+            <div class="modal-text">আপনার ফান্ড রিকোয়েস্ট সফলভাবে সাবমিট হয়েছে। ভেরিফাই করার পর ব্যালেন্স যোগ করা হবে।</div>
+            <button class="modal-btn" onclick="redirectToDashboard()">OK</button>
+        </div>
+    </div>
+
+    <div id="warningModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="error-icon-circle">✕</div>
+            <div class="modal-title" style="color: #e74c3c;">ভুল তথ্য দেওয়া হয়েছে!</div>
+            <div id="warning-text" class="modal-text">দয়া করে সঠিক অ্যামাউন্ট এবং সঠিক ইউটিআর (UTR) নম্বর দিন।</div>
+            <button class="modal-btn" onclick="closeWarningModal()">ঠিক আছে</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById("mySidebar");
+            sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
+        }
+
+        function updateQRCode() {
+            const amount = document.getElementById("fund-amount").value;
+            const upiId = "9749401427@fam";
+            const name = "ShahidSMM";
+            
+            let upiString = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR`;
+            
+            if (!amount || amount <= 0) {
+                upiString = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&cu=INR`;
+            }
+
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiString)}`;
+            document.getElementById("dynamic-qr").src = qrApiUrl;
+        }
+
+        window.onload = function() {
+            updateQRCode();
+        };
+
+        function redirectToDashboard() {
+            window.location.href = "dashboard.html";
+        }
+
+        function showWarning(message) {
+            document.getElementById("warning-text").innerText = message;
+            document.getElementById("warningModal").style.display = "flex";
+        }
+
+        function closeWarningModal() {
+            document.getElementById("warningModal").style.display = "none";
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDiqGuREonvLCr4I3ly0ChHzpMAbeDnrPA",
+          authDomain: "sahidsmmpenal-635b4.firebaseapp.com",
+          projectId: "sahidsmmpenal-635b4",
+          storageBucket: "sahidsmmpenal-635b4.firebasestorage.app",
+          messagingSenderId: "982748676616",
+          appId: "1:982748676616:web:a2a83d7f20734b638107bd",
+          measurementId: "G-B6EHE18EZV"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("Logged in as:", user.email);
+            }
+        });
+
+        document.getElementById("submit-fund-btn").addEventListener("click", async function() {
+            const amountInput = document.getElementById("fund-amount").value.trim();
+            const trxIdInput = document.getElementById("trx-id").value.trim();
+
+            if (!amountInput || Number(amountInput) <= 0) {
+                showWarning("দয়া করে একটি সঠিক পেমেন্ট অ্যামাউন্ট (₹) দিন।");
+                return;
+            }
+
+            if (!trxIdInput || trxIdInput.length < 5) {
+                showWarning("দয়া করে সঠিক ১২ ডিজিটের ইউটিআর (UTR) নম্বর দিন।");
+                return;
+            }
+
+            const user = auth.currentUser;
+            const userId = user ? user.uid : "guest_user";
+            const userEmail = user ? user.email : "guest@smm.com";
+
+            try {
+                await addDoc(collection(db, "funds"), {
+                    userId: userId,
+                    userEmail: userEmail,
+                    amount: amountInput,
+                    trxId: trxIdInput,
+                    gateway: "Dynamic UPI QR",
+                    status: "Pending",
+                    timestamp: serverTimestamp()
+                });
+
+                document.getElementById("successModal").style.display = "flex";
+
+            } catch (error) {
+                console.error("Error submitting fund request: ", error);
+                showWarning("সার্ভারে সমস্যা হয়েছে! দয়া করে আবার চেষ্টা করুন।");
+            }
+        });
+
+        window.logout = function() {
+            signOut(auth).then(() => {
+                window.location.href = "index.html";
+            });
+        }
+    </script>
+</body>
+</html>
