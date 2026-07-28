@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Shahid SMM Panel</title>
+    <style>
+        body {
+            background-color: #0d0b21;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background: #171336;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #28245c;
+            position: relative;
+        }
+        .nav-brand {
+            color: #ff4757;
+            font-weight: bold;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .menu-icon {
+            font-size: 22px;
+            cursor: pointer;
+            color: #fff;
+        }
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            right: 0;
+            background-color: #171336;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            border-left: 1px solid #28245c;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+        }
+        .sidebar a {
+            padding: 12px 25px;
+            text-decoration: none;
+            font-size: 15px;
+            color: #b2bec3;
+            display: block;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(40, 36, 92, 0.4);
+        }
+        .sidebar a:hover {
+            color: #ffd700;
+            background-color: #0d0b21;
+        }
+        .sidebar .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 25px;
+            border: none;
+            background: none;
+        }
+        .sidebar-balance {
+            background: #0d0b21;
+            margin: 10px 15px 20px 15px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #28245c;
+            text-align: center;
+        }
+        .sidebar-balance h4 {
+            margin: 0;
+            color: #a0a0a0;
+            font-size: 12px;
+        }
+        .sidebar-balance p {
+            margin: 5px 0 0 0;
+            color: #ffd700;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+        .stats-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            flex: 1;
+            background: #171336;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #28245c;
+            text-align: center;
+        }
+        .stat-card h4 {
+            margin: 0;
+            font-size: 12px;
+            color: #a0a0a0;
+        }
+        .stat-card p {
+            margin: 8px 0 0 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        .order-box {
+            background: #171336;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #28245c;
+        }
+        .page-title {
+            color: #fff;
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #28245c;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            color: #a0a0a0;
+            font-size: 12px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group select, .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: #0d0b21;
+            border: 1px solid #28245c;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .btn-submit {
+            background: #28245c;
+            color: #fff;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover {
+            background: #36307a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="nav-brand">👑 CHEAPEST SMMPANELS</div>
+        <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+    </div>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleSidebar()">&times;</a>
+        
+        <div class="sidebar-balance">
+            <h4>ACCOUNT BALANCE</h4>
+            <p id="menu-balance">₹0.00</p>
+        </div>
+
+        <a href="dashboard.html" style="color: #ffd700;">🛒 New Order</a>
+        <a href="orders.html">📦 Orders</a>
+        <a href="services.html">📋 Services</a>
+        <a href="add-funds.html">💳 Add Funds</a>
+        <a href="mass-order.html">⚡ Mass Order</a>
+        <a href="referrals.html">🎁 Refer & Earn</a>
+        <a href="updates.html">🔔 Updates</a>
+        <a href="account.html">👤 Account (Add/Manage)</a>
+        <a href="#" onclick="logout()" style="color: #ff4757; font-weight: bold;">🚪 Logout</a>
+    </div>
+
+    <div class="container">
+        <div class="stats-container">
+            <div class="stat-card">
+                <h4>ACCOUNT</h4>
+                <p id="user-display" style="font-size: 13px; color: #fff;">Loading...</p>
+            </div>
+            <div class="stat-card">
+                <h4>BALANCE</h4>
+                <p id="user-balance">₹0.00</p>
+            </div>
+        </div>
+
+        <div class="order-box">
+            <div class="page-title">🛒 New Order</div>
+            
+            <div class="form-group">
+                <label>Category</label>
+                <select id="category" onchange="updateServices()">
+                    <option value="">Select Category</option>
+                    <option value="ig_followers">Instagram Followers [Non-Drop]</option>
+                    <option value="ig_cheapest">Instagram Followers [Cheapest]</option>
+                    <option value="ig_norefill">Instagram Followers [No Refill]</option>
+                    <option value="ig_views_super">Instagram Views [Super Fast & Cheap]</option>
+                    <option value="ig_reels_views">Instagram Reels Views</option>
+                    <option value="ig_likes">Instagram Likes [Real / Active]</option>
+                    <option value="fb_page">Facebook Page Likes & Followers</option>
+                    <option value="fb_video">Facebook Video Views</option>
+                    <option value="yt_subs">YouTube Subscribers</option>
+                    <option value="yt_views">YouTube Monetization Views</option>
+                    <option value="tg_members">Telegram Members</option>
+                    <option value="tg_post_views">Telegram Post Views</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Service</label>
+                <select id="service" onchange="updateRate()">
+                    <option value="">Select Category First</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Link</label>
+                <input type="text" id="link" placeholder="https://...">
+            </div>
+
+            <div class="form-group">
+                <label>Quantity</label>
+                <input type="number" id="quantity" placeholder="1000" onkeyup="calculateTotal()">
+            </div>
+
+            <div class="form-group">
+                <label>Charge (₹)</label>
+                <input type="text" id="total" value="0.00" disabled style="background: #120f2b; color: #ffd700; font-weight: bold;">
+            </div>
+
+            <button class="btn-submit" onclick="placeOrder()">Submit Order</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById("mySidebar");
+            if (sidebar.style.width === "250px") {
+                sidebar.style.width = "0";
+            } else {
+                sidebar.style.width = "250px";
+            }
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, collection, addDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDiqGuREonvLCr4I3ly0ChHzpMAbeDnrPA",
+          authDomain: "sahidsmmpenal-635b4.firebaseapp.com",
+          projectId: "sahidsmmpenal-635b4",
+          storageBucket: "sahidsmmpenal-635b4.firebasestorage.app",
+          messagingSenderId: "982748676616",
+          appId: "1:982748676616:web:a2a83d7f20734b638107bd",
+          measurementId: "G-B6EHE18EZV"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        window.userBalance = 0.00;
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                document.getElementById("user-display").innerText = user.email || user.displayName || "User";
+                
+                const userDocRef = doc(db, "users", user.uid);
+                const userDoc = await getDoc(userDocRef);
+                
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    window.userBalance = parseFloat(userData.balance) || 0;
+                } else {
+                    window.userBalance = 0.00;
+                }
+                
+                document.getElementById("user-balance").innerText = "₹ " + window.userBalance.toFixed(2);
+                document.getElementById("menu-balance").innerText = "₹ " + window.userBalance.toFixed(2);
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        window.logout = function() {
+            signOut(auth).then(() => {
+                window.location.href = "index.html";
+            });
+        }
+
+        window.placeOrder = async function() {
+            const category = document.getElementById("category").value;
+            const serviceSelect = document.getElementById("service");
+            const serviceName = serviceSelect.options[serviceSelect.selectedIndex] ? serviceSelect.options[serviceSelect.selectedIndex].text : "";
+            const link = document.getElementById("link").value;
+            const qty = document.getElementById("quantity").value;
+
+            if(!category || !link || !qty) {
+                alert("Please fill in all details!");
+                return;
+            }
+
+            if(window.calculatedCharge > window.userBalance) {
+                alert("Insufficient Balance! Please add funds.");
+                return;
+            }
+
+            const user = auth.currentUser;
+            if (!user) {
+                alert("Please login first!");
+                window.location.href = "index.html";
+                return;
+            }
+
+            try {
+                // ১. ফায়ারবেস ডাটাবেজের 'orders' কালেকশনে অর্ডার সেভ করা
+                await addDoc(collection(db, "orders"), {
+                    userId: user.uid,
+                    userEmail: user.email,
+                    category: category,
+                    service: serviceName,
+                    link: link,
+                    quantity: qty,
+                    charge: window.calculatedCharge.toFixed(2),
+                    status: "Pending",
+                    timestamp: serverTimestamp()
+                });
+
+                // ২. ইউজারের অ্যাকাউন্ট থেকে টাকা কেটে ব্যালেন্স আপডেট করা
+                const newBalance = window.userBalance - window.calculatedCharge;
+                const userDocRef = doc(db, "users", user.uid);
+                await updateDoc(userDocRef, {
+                    balance: newBalance.toFixed(2)
+                });
+
+                // ৩. টেলিগ্রাম নোটিফিকেশন পাঠানো
+                const botToken = "7703347975:AAhNvJsQZ7V6TM1V2D5oip025mTSaTfUA";
+                const chatId = "8549960820";
+                const message = `🚨 New SMM Order Received!\n\n👤 User: ${user.email}\n📂 Service: ${serviceName}\n🔗 Link: ${link}\n📦 Quantity: ${qty}\n💰 Charge: ₹${window.calculatedCharge.toFixed(2)}`;
+                const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+                fetch(telegramUrl).catch(err => console.log(err));
+
+                alert("Order placed successfully!");
+                window.location.href = "orders.html";
+
+            } catch (error) {
+                console.error("Error placing order: ", error);
+                alert("Failed to place order. Try again!");
+            }
+        }
+    </script>
+
+    <script>
+        let currentRate = 0;
+        window.calculatedCharge = 0;
+
+        function updateServices() {
+            const category = document.getElementById("category").value;
+            const serviceSelect = document.getElementById("service");
+            serviceSelect.innerHTML = "";
+
+            if (category === "ig_followers") {
+                serviceSelect.innerHTML = `
+                    <option value="120.00">Instagram Followers [Ultra Fast Speed] - ₹120 per 1k</option>
+                    <option value="155.00">Instagram Followers [Premium Quality HQ] - ₹155 per 1k</option>
+                    <option value="85.00">Instagram Followers [Slow Speed / Non-Drop] - ₹85 per 1k</option>
+                `;
+            } else if (category === "ig_cheapest") {
+                serviceSelect.innerHTML = `
+                    <option value="35.00">IG Followers [Super Cheap Market] - ₹35 per 1k</option>
+                    <option value="75.00">IG Followers [Fast Delivery] - ₹75 per 1k</option>
+                `;
+            } else if (category === "ig_norefill") {
+                serviceSelect.innerHTML = `
+                    <option value="45.00">Instagram Followers [No Refill - Ultra Budget] - ₹45 per 1k</option>
+                    <option value="60.00">Instagram Followers [No Refill - Fast] - ₹60 per 1k</option>
+                `;
+            } else if (category === "ig_views_super") {
+                serviceSelect.innerHTML = `
+                    <option value="0.01">Instagram Views [Super Fast & Cheap] - ₹0.01 per 1k</option>
+                    <option value="0.03">Instagram Views [Instant Speed] - ₹0.03 per 1k</option>
+                `;
+            } else if (category === "ig_reels_views") {
+                serviceSelect.innerHTML = `
+                    <option value="0.01">Instagram Reels Views [Cheap Offer] - ₹0.01 per 1k</option>
+                    <option value="0.02">Instagram Reels Views [High Retention] - ₹0.02 per 1k</option>
+                `;
+            } else if (category === "ig_likes") {
+                serviceSelect.innerHTML = `
+                    <option value="10.00">Instagram Likes [Instant] - ₹10 per 1k</option>
+                    <option value="25.00">Instagram Likes [Real Active] - ₹25 per 1k</option>
+                `;
+            } else if (category === "fb_page") {
+                serviceSelect.innerHTML = `
+                    <option value="300.00">Facebook Page Likes & Followers - ₹300 per 1k</option>
+                `;
+            } else if (category === "fb_video") {
+                serviceSelect.innerHTML = `
+                    <option value="50.00">Facebook Video Views - ₹50 per 1k</option>
+                `;
+            } else if (category === "yt_subs") {
+                serviceSelect.innerHTML = `
+                    <option value="800.00">YouTube Subscribers [Non-Drop] - ₹800 per 1k</option>
+                `;
+            } else if (category === "yt_views") {
+                serviceSelect.innerHTML = `
+                    <option value="350.00">YouTube Monetization Views - ₹350 per 1k</option>
+                `;
+            } else if (category === "tg_members") {
+                serviceSelect.innerHTML = `
+                    <option value="150.00">Telegram Members [Cheapest] - ₹150 per 1k</option>
+                    <option value="220.00">Telegram Members [Fast Speed] - ₹220 per 1k</option>
+                `;
+            } else if (category === "tg_post_views") {
+                serviceSelect.innerHTML = `
+                    <option value="0.02">Telegram Post Views [Super Cheap] - ₹0.02 per 1k</option>
+                    <option value="0.05">Telegram Post Views [Instant] - ₹0.05 per 1k</option>
+                `;
+            } else {
+                serviceSelect.innerHTML = '<option value="">Select Category First</option>';
+            }
+            updateRate();
+        }
+
+        function updateRate() {
+            const serviceSelect = document.getElementById("service");
+            currentRate = parseFloat(serviceSelect.value) || 0;
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            const qty = document.getElementById("quantity").value;
+            window.calculatedCharge = qty ? (qty / 1000) * currentRate : 0;
+            document.getElementById("total").value = "₹ " + window.calculatedCharge.toFixed(2);
+        }
+    </script>
+</body>
+</html>
