@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Order - Shahid SMM Panel</title>
+    <style>
+        body {
+            background-color: #0d0b21;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background: #171336;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #28245c;
+        }
+        .nav-brand {
+            color: #ff4757;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        /* ইউজার ইনফো ও ব্যালেন্স স্টাইল */
+        .user-info-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .user-email-display {
+            font-size: 13px;
+            color: #b2bec3;
+        }
+        .balance-badge {
+            background: #28245c;
+            color: #ffd700;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            border: 1px solid #36307a;
+        }
+        .menu-icon {
+            font-size: 22px;
+            cursor: pointer;
+            color: #fff;
+        }
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            right: 0;
+            background-color: #171336;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            border-left: 1px solid #28245c;
+        }
+        .sidebar a {
+            padding: 12px 25px;
+            text-decoration: none;
+            font-size: 15px;
+            color: #b2bec3;
+            display: block;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(40, 36, 92, 0.4);
+        }
+        .sidebar a:hover {
+            color: #ffd700;
+            background-color: #0d0b21;
+        }
+        .sidebar .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 25px;
+            border: none;
+            background: none;
+        }
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+        .order-box {
+            background: #171336;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #28245c;
+        }
+        .page-title {
+            color: #fff;
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #28245c;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            color: #a0a0a0;
+            font-size: 12px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group select, .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: #0d0b21;
+            border: 1px solid #28245c;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .info-text {
+            font-size: 12px;
+            color: #a0a0a0;
+            margin-top: 5px;
+        }
+        .btn-submit {
+            background: #28245c;
+            color: #fff;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover {
+            background: #36307a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="nav-brand">👑 CHEAPEST SMMPANELS</div>
+        
+        <!-- ইউজার জিমেইল ও ব্যালেন্স শো করার জায়গা -->
+        <div class="user-info-box">
+            <span id="user-email-display" class="user-email-display">Loading...</span>
+            <div class="balance-badge">Balance: ₹<span id="user-balance">0.00</span></div>
+        </div>
+
+        <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+    </div>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleSidebar()">&times;</a>
+        <a href="dashboard.html" style="color: #ffd700;">🛒 New Order</a>
+        <a href="orders.html">📦 Orders</a>
+        <a href="services.html">📋 Services</a>
+        <a href="add-funds.html">💳 Add Funds</a>
+        <a href="mass-order.html">⚡ Mass Order</a>
+        <a href="referrals.html">🎁 Refer & Earn</a>
+        <a href="updates.html">🔔 Updates</a>
+        <a href="account.html">👤 Account</a>
+        <a href="#" onclick="logout()" style="color: #ff4757; font-weight: bold;">🚪 Logout</a>
+    </div>
+
+    <div class="container">
+        <div class="order-box">
+            <div class="page-title">🛒 Create New Order</div>
+            
+            <div class="form-group">
+                <label>Category</label>
+                <select id="category">
+                    <option value="instagram">Instagram Followers</option>
+                    <option value="youtube">YouTube Subscribers</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Service</label>
+                <select id="service">
+                    <option value="101">Instagram Followers [Non-Drop]</option>
+                    <option value="102">Instagram Followers [Fast Speed]</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Link</label>
+                <input type="text" id="link" placeholder="https://www.instagram.com/yourprofile">
+            </div>
+
+            <div class="form-group">
+                <label>Quantity</label>
+                <input type="number" id="quantity" placeholder="100" min="10" max="10000">
+                <div class="info-text">Min: 10 | Max: 10,000</div>
+            </div>
+
+            <button class="btn-submit" onclick="submitOrder()">Place Order</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById("mySidebar");
+            sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, doc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDiqGuREonvLCr4I3ly0ChHzpMAbeDnrPA",
+          authDomain: "sahidsmmpenal-635b4.firebaseapp.com",
+          projectId: "sahidsmmpenal-635b4",
+          storageBucket: "sahidsmmpenal-635b4.firebasestorage.app",
+          messagingSenderId: "982748676616",
+          appId: "1:982748676616:web:a2a83d7f20734b638107bd",
+          measurementId: "G-B6EHE18EZV"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // ইউজার লগইন চেক এবং জিমেইল ও ব্যালেন্স লোড করার কোড
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = "index.html";
+            } else {
+                // জিমেইল ডিসপ্লে করা
+                document.getElementById("user-email-display").innerText = user.email;
+
+                // ফায়ারবেস থেকে ইউজারের ব্যালেন্স ফেচ করা
+                try {
+                    const userDocRef = doc(db, "users", user.uid);
+                    const userDoc = await getDoc(userDocRef);
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
+                        document.getElementById("user-balance").innerText = userData.balance || "0.00";
+                    } else {
+                        document.getElementById("user-balance").innerText = "0.00";
+                    }
+                } catch (error) {
+                    console.error("Error fetching balance:", error);
+                    document.getElementById("user-balance").innerText = "0.00";
+                }
+            }
+        });
+
+        window.submitOrder = async function() {
+            const serviceId = document.getElementById("service").value;
+            const link = document.getElementById("link").value;
+            const quantity = document.getElementById("quantity").value;
+
+            if (!link || !quantity) {
+                alert("Please fill in all fields!");
+                return;
+            }
+
+            const user = auth.currentUser;
+            if (!user) {
+                alert("Please login first!");
+                return;
+            }
+
+            // ====================================================
+            // ⚠️ আপনার সাপ্লায়ার প্যানেলের তথ্য এখানে বসান:
+            // ====================================================
+            const supplierApiUrl = "YOUR_SUPPLIER_API_URL_HERE"; 
+            const supplierApiKey = "YOUR_API_KEY_HERE"; 
+
+            try {
+                const formData = new URLSearchParams();
+                formData.append('key', supplierApiKey);
+                formData.append('action', 'add');
+                formData.append('service', serviceId);
+                formData.append('link', link);
+                formData.append('quantity', quantity);
+
+                const apiResponse = await fetch(supplierApiUrl, {
+                    method: 'POST',
+                    body: formData
+                });
+                const apiData = await apiResponse.json();
+
+                let supplierOrderId = "Manual";
+                if(apiData.order) {
+                    supplierOrderId = apiData.order;
+                }
+
+                await addDoc(collection(db, "orders"), {
+                    userId: user.uid,
+                    userEmail: user.email,
+                    serviceId: serviceId,
+                    link: link,
+                    quantity: quantity,
+                    supplierOrderId: supplierOrderId,
+                    status: "Pending",
+                    timestamp: serverTimestamp()
+                });
+
+                const botToken = "7703347975:AAhNvJsQZ7V6TM1V2D5oip025mTSaTfUA";
+                const chatId = "8549960820";
+                const message = `🛒 New Order Placed!\n\n👤 User: ${user.email}\n🆔 Service ID: ${serviceId}\n🔗 Link: ${link}\n📦 Quantity: ${quantity}\n🌐 Supplier Order ID: ${supplierOrderId}`;
+                const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+                fetch(telegramUrl).catch(err => console.log(err));
+
+                alert("Order placed successfully! Order ID: " + supplierOrderId);
+                document.getElementById("link").value = "";
+                document.getElementById("quantity").value = "";
+
+            } catch (error) {
+                console.error("Error placing order: ", error);
+                alert("Failed to place order. Check your API details or balance!");
+            }
+        }
+
+        window.logout = function() {
+            signOut(auth).then(() => {
+                window.location.href = "index.html";
+            });
+        }
+    </script>
+</body>
+</html>
