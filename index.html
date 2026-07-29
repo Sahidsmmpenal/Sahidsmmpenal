@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Shahid SMM Panel</title>
+    <style>
+        body { background-color: #0d0b21; color: #ffffff; font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .container { max-width: 400px; width: 100%; padding: 30px; background: #171336; border-radius: 12px; border: 1px solid #28245c; box-sizing: border-box; text-align: center; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; color: #a0a0a0; font-size: 13px; margin-bottom: 8px; font-weight: bold; }
+        .form-group input { width: 100%; padding: 12px; background: #0d0b21; border: 1px solid #28245c; border-radius: 6px; color: #fff; font-size: 14px; box-sizing: border-box; outline: none; }
+        .btn-submit { background: #6c5ce7; color: #fff; width: 100%; padding: 12px; border: none; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer; }
+        .btn-submit:hover { background: #5b4bc4; }
+        .error-msg { color: #ff4757; font-size: 13px; margin-bottom: 15px; display: none; }
+        .link-text { margin-top: 15px; font-size: 13px; color: #a0a0a0; }
+        .link-text a { color: #ffd700; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h3 style="color: #ffd700; margin-top: 0; margin-bottom: 20px;">🔐 Login to SMM Panel</h3>
+        
+        <div id="errorMsg" class="error-msg"></div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="emailInput" placeholder="Enter your email">
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="passwordInput" placeholder="Enter password">
+        </div>
+
+        <button class="btn-submit" id="loginBtn">Login</button>
+
+        <div class="link-text">
+            Don't have an account? <a href="register.html">Register here</a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, setPersistence, browserLocalPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDiqGuREonvLCr4I3ly0ChHzpMAbeDnrPA",
+          authDomain: "sahidsmmpenal-635b4.firebaseapp.com",
+          projectId: "sahidsmmpenal-635b4",
+          storageBucket: "sahidsmmpenal-635b4.firebasestorage.app",
+          messagingSenderId: "982748676616",
+          appId: "1:982748676616:web:a2a83d7f20734b638107bd",
+          measurementId: "G-B6EHE18EZV"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // লগইন স্ট্যাটাস ব্রাউজারে পার্মানেন্টলি সেভ রাখার কোড (ট্যাব কাটলেও লগআউট হবে না)
+        setPersistence(auth, browserLocalPersistence).catch((error) => {
+            console.error("Auth persistence error: ", error);
+        });
+
+        // যদি ইউজার অলরেডি লগইন করা থাকে, তবে সরাসরি ড্যাশবোর্ডে পাঠিয়ে দেবে
+        onAuthStateChanged(auth, (user) => {
+            if (user && window.location.pathname.endsWith("index.html")) {
+                // চাইলে অটো রিডাইরেক্ট করতে পারিস, তবে লগইন পেজে ইউজার যাতে নিজে লগইন করতে পারে সেজন্য এটা রাখা হলো
+            }
+        });
+
+        document.getElementById('loginBtn').addEventListener('click', async () => {
+            const email = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value.trim();
+            const errorDiv = document.getElementById('errorMsg');
+
+            if (!email || !password) {
+                errorDiv.style.display = 'block';
+                errorDiv.innerText = "Please fill in all fields!";
+                return;
+            }
+
+            try {
+                // ফায়ারবেসের মাধ্যমে লগইন করা
+                await signInWithEmailAndPassword(auth, email, password);
+                
+                // সফলভাবে লগইন হলে ড্যাশবোর্ডে রিডাইরেক্ট হবে
+                window.location.href = "dashboard.html";
+
+            } catch (error) {
+                errorDiv.style.display = 'block';
+                errorDiv.innerText = "Invalid email or password!";
+            }
+        });
+    </script>
+</body>
+</html>
