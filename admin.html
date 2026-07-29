@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Shahid SMM Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        body { background: #0f172a; color: #f8fafc; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        h2 { margin-bottom: 20px; color: #ffffff; text-align: center; }
+        .table-container { background: #1e293b; border-radius: 12px; overflow: hidden; border: 1px solid #334155; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 15px; border-bottom: 1px solid #334155; font-size: 14px; }
+        th { background: #0f172a; color: #94a3b8; }
+        .btn-approve { background: #10b981; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: 500; }
+        .btn-approve:hover { background: #059669; }
+        .status-pending { color: #f59e0b; font-weight: 600; }
+        .status-approved { color: #10b981; font-weight: 600; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #94a3b8; text-decoration: none; }
+        .back-link:hover { color: #fff; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+        <h2>👑 Admin Panel - Fund Requests</h2>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                py>
+                <tbody id="fundRequestsTable">
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: #94a3b8;">Loading requests...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, getDocs, doc, updateDoc, getDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDiqGuREonvLCr4I3ly0ChHzpMAbeDnrPA",
+          authDomain: "sahidsmmpenal-635b4.firebaseapp.com",
+          projectId: "sahidsmmpenal-635b4",
+          storageBucket: "sahidsmmpenal-635b4.firebasestorage.app",
+          messagingSenderId: "982748676616",
+          appId: "1:982748676616:web:a2a83d7f20734b638107bd",
+          measurementId: "G-B6EHE18EZV"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore();
+
+        // ফান্ড রিকোয়েস্টগুলো ফেচ করে টেবিলে দেখানোর ফাংশন
+        async function loadFundRequests() {
+            const tableBody = document.getElementById('fundRequestsTable');
+            tableBody.innerHTML = '';
+
+            try {
+                const querySnapshot = await getDocs(collection(db, "funds"));
+                
+                if (querySnapshot.empty) {
+                    tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #94a3b8;">No fund requests found.</td></tr>`;
+                    return;
+                }
+
+                querySnapshot.forEach((document) => {
+                    const data = document.data();
+                    const docId = document.id;
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${data.email}</td>
+                        <td>₹${data.amount}</td>
+                        <td class="${data.status === 'Approved' ? 'status-approved' : 'status-pending'}">${data.status}</td>
+                        <td>
+                            ${data.status === 'Pending' ? `<button class="btn-approve" onclick="approveFund('${docId}', '${data.userId}', ${data.amount})">Approve</button>` : 'Completed'}
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error("Error loading requests: ", error);
+            }
+        }
+
+        // ফান্ড অ্যাপ্রুভ করার এবং ইউজারের ব্যালেন্স বাড়িয়ে দেওয়ার ফাংশন
+        window.approveFund = async function(requestId, userId, amount) {
+            if (!confirm(`Are you sure you want to approve ₹${amount} for this user?`)) return;
+
+            try {
+                // ১. ফান্ডের স্ট্যাটাস 'Approved' করা
+                const requestRef = doc(db, "funds", requestId);
+                await updateDoc(requestRef, { status: "Approved" });
+
+                // ২. ইউজারের ব্যালেন্স অটোমেটিক বাড়িয়ে দেওয়া
+                const userRef = doc(db, "users", userId);
+                await updateDoc(userRef, {
+                    balance: increment(amount)
+                });
+
+                alert("Fund approved and user balance updated successfully!");
+                loadRequests(); // টেবিল রিফ্রেশ করা
+
+            } catch (error) {
+                console.error("Error approving fund: ", error);
+                alert("Failed to approve fund.");
+            }
+        }
+
+        // পেজ লোড হলেই রিকোয়েস্টগুলো দেখাবে
+        loadFundRequests();
+    </script>
+</body>
+</html>
