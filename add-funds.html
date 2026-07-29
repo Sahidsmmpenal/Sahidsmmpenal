@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Funds - Secure Payment</title>
+    <!-- Google Fonts for Premium Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: #0f172a;
+            color: #f8fafc;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .payment-card {
+            background: #1e293b;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            border: 1px solid #334155;
+        }
+        .payment-card h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .input-group input:focus {
+            border-color: #6366f1;
+        }
+        .btn-pay {
+            background: #6366f1;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-pay:hover {
+            background: #4f46e5;
+        }
+        .back-link {
+            margin-top: 15px;
+            display: block;
+            color: #94a3b8;
+            font-size: 13px;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="payment-card">
+        <h2>Add Funds</h2>
+        
+        <div class="input-group">
+            <label>Enter Amount (INR)</label>
+            <input type="number" id="amountInput" placeholder="e.g. 500">
+        </div>
+
+        <button class="btn-pay" id="proceedBtn">Generate QR / Pay</button>
+        
+        <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDiqGuREonvLCr4I3ly0ChHzpMAbeDnrPA",
+          authDomain: "sahidsmmpenal-635b4.firebaseapp.com",
+          projectId: "sahidsmmpenal-635b4",
+          storageBucket: "sahidsmmpenal-635b4.firebasestorage.app",
+          messagingSenderId: "982748676616",
+          appId: "1:982748676616:web:a2a83d7f20734b638107bd",
+          measurementId: "G-B6EHE18EZV"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore();
+
+        let currentUser = null;
+
+        // ইউজার লগইন করা আছে কি না চেক করা
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+            } else {
+                // লগইন না থাকলে লগইন পেজে রিডাইরেক্ট করবে
+                window.location.href = "index.html";
+            }
+        });
+
+        document.getElementById('proceedBtn').addEventListener('click', async () => {
+            const amount = document.getElementById('amountInput').value.trim();
+
+            if (!amount || amount <= 0) {
+                alert("Please enter a valid amount!");
+                return;
+            }
+
+            if (!currentUser) {
+                alert("User not logged in!");
+                return;
+            }
+
+            try {
+                // ফায়ারস্টোরের funds কালেকশনে পেমেন্ট রিকোয়েস্ট বা অর্ডার সেভ করা
+                await addDoc(collection(db, "funds"), {
+                    userId: currentUser.uid,
+                    email: currentUser.email,
+                    amount: Number(amount),
+                    status: "Pending",
+                    createdAt: serverTimestamp()
+                });
+
+                alert("Payment request recorded successfully! Proceeding to QR generation.");
+                
+                // এখানে তোর ইউপিআই কিউআর কোড জেনারেশন বা পেমেন্ট গেটওয়ের লজিক যুক্ত করতে পারিস
+
+            } catch (error) {
+                console.error("Error adding payment record: ", error);
+                alert("Failed to process payment request.");
+            }
+        });
+    </script>
+</body>
+</html>
