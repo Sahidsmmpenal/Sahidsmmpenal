@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Funds - Sahid SMM Panel</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #0f0f0f;
+            color: #ffffff;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h2 {
+            text-align: center;
+            color: #f39c12;
+            margin-bottom: 8px;
+            font-size: 24px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+        .scanner-box {
+            text-align: center;
+            background: #222;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #f39c12;
+            margin-bottom: 20px;
+        }
+        .scanner-box img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 6px;
+        }
+        .scanner-box p {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #ddd;
+        }
+        .payment-methods {
+            background: #252525;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .payment-methods p {
+            margin: 6px 0;
+            color: #ccc;
+        }
+        .payment-methods span {
+            color: #00ffcc;
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #bbb;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        select, input {
+            width: 100%;
+            padding: 12px;
+            background: #2b2b2b;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.3s;
+        }
+        select:focus, input:focus {
+            border-color: #f39c12;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: #000;
+            font-weight: bold;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            margin-top: 10px;
+        }
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-link:hover {
+            color: #f39c12;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>👑 SAHID SMM PANEL</h2>
+        <p class="subtitle">Add Funds to Your Account Securely</p>
+
+        <div class="scanner-box">
+            <div style="width: 140px; height: 140px; background: #fff; margin: 0 auto; display: flex; align-items: center; justify-content: center; border-radius: 6px; color: #000; font-weight: bold; font-size: 12px; text-align: center;">
+                [ QR SCANNER ]
+            </div>
+            <p>Scan QR Code via UPI / bKash / Nagad to Pay</p>
+        </div>
+
+        <div class="payment-methods">
+            <p><strong>📱 bKash / Nagad:</strong> <span>01XXXXXXXXX</span></p>
+            <p><strong>⚡ UPI ID:</strong> <span>sahid@paytm</span></p>
+        </div>
+
+        <form id="addFundsForm" onsubmit="submitFundRequest(event)">
+            <div class="form-group">
+                <label>Select Payment Method:</label>
+                <select id="paymentMethod" required>
+                    <option value="bKash">bKash</option>
+                    <option value="Nagad">Nagad</option>
+                    <option value="UPI">UPI / Paytm</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Your Sender Number / Account:</label>
+                <input type="text" id="senderNumber" placeholder="e.g., 017xxxxxxxx or UPI ID" required>
+            </div>
+
+            <div class="form-group">
+                <label>Amount (BDT / USD):</label>
+                <input type="number" id="fundAmount" placeholder="Enter amount" required>
+            </div>
+
+            <div class="form-group">
+                <label>Enter UPI ID / Transaction ID (UTR):</label>
+                <input type="text" id="utrId" placeholder="Enter UPI ID 12 digit Transaction ID" maxlength="12" required>
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Fund Request</button>
+        </form>
+
+        <a href="index.html" class="back-link">← Back to Dashboard</a>
+    </div>
+
+    <script>
+        function submitFundRequest(e) {
+            e.preventDefault();
+            alert('Fund request submitted successfully! Your request has been sent to Telegram Admin for approval.');
+        }
+    </script>
+</body>
+</html>
