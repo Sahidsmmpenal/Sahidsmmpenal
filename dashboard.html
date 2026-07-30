@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahid SMM Panel - Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #343a40;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+        .main-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .form-row {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Sahid SMM Panel</h1>
+        <div>
+            <span id="user-email-display" style="margin-right: 15px;">sm8237715320226@gmail.com</span>
+            <a href="addfund.html" class="btn" style="background-color: #28a745;">Add Funds</a>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="card">
+            <h3>Place New Order</h3>
+            <div class="form-row">
+                <label for="category-select">Select Category:</label>
+                <select id="category-select" onchange="updateServices()">
+                    <option value="">-- Choose Category --</option>
+                    <option value="instagram">Instagram Followers & Likes</option>
+                    <option value="youtube">YouTube Views & Subscribers</option>
+                    <option value="telegram">Telegram Members & Views</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="service-select">Select Service:</label>
+                <select id="service-select">
+                    <option value="">-- Choose Service First --</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="order-link">Link:</label>
+                <input type="text" id="order-link" placeholder="https://...">
+            </div>
+
+            <div class="form-row">
+                <label for="order-quantity">Quantity:</label>
+                <input type="number" id="order-quantity" placeholder="1000">
+            </div>
+
+            <button class="btn" onclick="alert('Order placed successfully!')">Submit Order</button>
+        </div>
+    </div>
+
+    <script>
+        const servicesData = {
+            instagram: [
+                "IG Followers [Non-Drop] - ₹50 per 1000",
+                "IG Real Likes - ₹20 per 1000",
+                "IG Story Views - ₹10 per 1000",
+                "IG Comments [Random] - ₹100 per 1000",
+                "IG Reels Views - ₹5 per 1000",
+                "IG Impressions - ₹15 per 1000",
+                "IG Saves - ₹25 per 1000",
+                "IG Live Stream Viewers - ₹200 per 1000"
+            ],
+            youtube: [
+                "YT High Retention Views - ₹200 per 1000",
+                "YT Lifetime Subscribers - ₹500 per 1000",
+                "YT Live Stream Viewers - ₹300 per 1000",
+                "YT Video Likes - ₹80 per 1000",
+                "YT Comments [Custom] - ₹400 per 1000",
+                "YT Shorts Views - ₹50 per 1000",
+                "YT Watch Time Hours - ₹800 per 1000",
+                "YT Shares - ₹60 per 1000"
+            ],
+            telegram: [
+                "TG Channel Members [Real] - ₹150 per 1000",
+                "TG Post Views [Last 10 Posts] - ₹10 per 1000",
+                "TG Reactions [Positive] - ₹30 per 1000",
+                "TG Poll Votes - ₹100 per 1000",
+                "TG Auto Views - ₹20 per 1000",
+                "TG Member Online Boost - ₹250 per 1000",
+                "TG Group Members - ₹180 per 1000",
+                "TG Premium Reactions - ₹400 per 1000"
+            ]
+        };
+
+        function updateServices() {
+            const cat = document.getElementById('category-select').value;
+            const servSelect = document.getElementById('service-select');
+            servSelect.innerHTML = '<option value="">-- Choose Service --</option>';
+            
+            if (servicesData[cat]) {
+                servicesData[cat].forEach(service => {
+                    const opt = document.createElement('option');
+                    opt.value = service;
+                    opt.textContent = service;
+                    servSelect.appendChild(opt);
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>
