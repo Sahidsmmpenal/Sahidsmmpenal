@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Funds - Shahid SMM Panel</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23171336%22 stroke=%22%23ffd700%22 stroke-width=%225%22/><text x=%2250%%22 y=%2260%%22 font-size=%2250%22 font-weight=%22bold%22 fill=%22%23ffd700%22 text-anchor=%22middle%22>S</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .payment-card {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            border: 1px solid #334155;
+            position: relative;
+        }
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .logo-box {
+            width: 42px;
+            height: 42px;
+            background: #0f172a;
+            border: 2px solid #6366f1;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo-box svg {
+            width: 24px;
+            height: 24px;
+            fill: #6366f1;
+        }
+        .payment-card h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+        }
+        .input-group input:focus {
+            border-color: #6366f1;
+        }
+        .btn-pay {
+            background: #6366f1;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-pay:hover {
+            background: #4f46e5;
+        }
+        .qr-container {
+            margin-top: 20px;
+            display: none;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            text-align: center;
+        }
+        .qr-container img {
+            width: 180px;
+            height: 180px;
+            background: #fff;
+            padding: 8px;
+            border-radius: 6px;
+        }
+        .qr-container p {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+        .utr-section {
+            margin-top: 15px;
+            text-align: left;
+        }
+        .back-link {
+            margin-top: 15px;
+            display: block;
+            color: #94a3b8;
+            font-size: 13px;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            color: #fff;
+        }
+
+        /* ওয়েটিং ওভারলে এবং স্পিনার স্টাইল */
+        #waitingOverlay {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 20px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            padding: 20px;
+            text-align: center;
+        }
+        .spinner {
+            width: 45px;
+            height: 45px;
+            border: 4px solid #334155;
+            border-top: 4px solid #6366f1;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #waitingText {
+            font-size: 15px;
+            font-weight: 500;
+            color: #f8fafc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="payment-card">
+        <div id="waitingOverlay">
+            <div class="spinner" id="loadingSpinner"></div>
+            <p id="waitingText">Please wait for approval...</p>
+            <a href="dashboard.html" class="back-link" style="margin-top: 20px; display: none;" id="backToDashBtn">← Back to Dashboard</a>
+        </div>
+
+        <div class="logo-container">
+            <div class="logo-box">
+                <svg viewBox="0 0 24 24"><path d="M5 16L3 5L8.5 10L12 4L15.5 10L21 5L19 16H5M19 19C19 19.6 18.6 20 18 20H6C5.4 20 5 19.6 5 19V18H19V19Z"/></svg>
+            </div>
+            <h2 style="margin: 0;">Add Funds</h2>
+        </div>
+        
+        <div class="input-group">
+            <label>Enter Amount (INR)</label>
+            <input type="number" id="amountInput" placeholder="e.g. 100">
+        </div>
+
+        <button class="btn-pay" id="proceedBtn">Generate QR Code</button>
+        
+        <div class="qr-container" id="qrContainer">
+            <img id="qrImage" src="" alt="UPI QR Code">
+            <p>Scan & Pay using UPI App, then enter UTR below</p>
+            
+            <div class="utr-section" id="utrSection">
+                <div class="input-group" style="margin-top: 12px;">
+                    <label>Enter 12-Digit UTR / Transaction ID</label>
+                    <input type="text" id="utrInput" maxlength="12" placeholder="e.g. 4321XXXXXX56">
+                </div>
+                <button class="btn-pay" id="submitUtrBtn" style="background: #10b981;">I Have Paid / Submit</button>
+            </div>
+        </div>
+
+        <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, doc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyDiqGuREonvLCr4I3ly0ChHzpMAbeDnrPA",
+          authDomain: "sahidsmmpenal-635b4.firebaseapp.com",
+          projectId: "sahidsmmpenal-635b4",
+          storageBucket: "sahidsmmpenal-635b4.firebasestorage.app",
+          messagingSenderId: "982748676616",
+          appId: "1:982748676616:web:a2a83d7f20734b638107bd",
+          measurementId: "G-B6EHE18EZV"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore();
+
+        let currentUser = null;
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+            } else {
+                window.location.href = "index.html";
+            }
+        });
+
+        document.getElementById('proceedBtn').addEventListener('click', () => {
+            const amount = document.getElementById('amountInput').value.trim();
+
+            if (!amount || amount <= 0) {
+                alert("Please enter a valid amount!");
+                return;
+            }
+
+            const upiID = "sahidsmmpay@oksbi"; 
+            const payeeName = "Shahid SMM Panel";
+            
+            const upiUrl = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=INR`;
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+
+            document.getElementById('qrImage').src = qrApiUrl;
+            document.getElementById('qrContainer').style.display = 'block';
+        });
+
+        const submitBtn = document.getElementById('submitUtrBtn');
+        
+        async function handlePaymentSubmit(e) {
+            e.preventDefault();
+            
+            const amount = document.getElementById('amountInput').value.trim();
+            const utr = document.getElementById('utrInput').value.trim();
+
+            if (!utr) {
+                alert("Please enter the 12-digit UTR / Transaction ID!");
+                return;
+            }
+
+            if (!currentUser) {
+                alert("User not logged in!");
+                return;
+            }
+
+            try {
+                document.getElementById('waitingOverlay').style.display = 'flex';
+
+                const docRef = await addDoc(collection(db, "funds"), {
+                    userId: currentUser.uid,
+                    email: currentUser.email || currentUser.displayName || 'User',
+                    amount: Number(amount),
+                    utrNumber: utr,
+                    status: "Pending",
+                    createdAt: serverTimestamp()
+                });
+
+                onSnapshot(doc(db, "funds", docRef.id), (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        const waitingText = document.getElementById('waitingText');
+                        const spinner = document.getElementById('loadingSpinner');
+                        const backBtn = document.getElementById('backToDashBtn');
+
+                        if (data.status === "Approved") {
+                            spinner.style.display = 'none';
+                            waitingText.innerHTML = "🎉 Your fund is successfully added!";
+                            waitingText.style.color = "#10b981";
+                            backBtn.style.display = 'inline-block';
+                        } else if (data.status === "Rejected") {
+                            spinner.style.display = 'none';
+                            waitingText.innerHTML = "❌ Your payment was rejected!";
+                            waitingText.style.color = "#ef4444";
+                            backBtn.style.display = 'inline-block';
+                        }
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error saving payment: ", error);
+                alert("Failed to submit payment. Try again.");
+                document.getElementById('waitingOverlay').style.display = 'none';
+            }
+        }
+
+        submitBtn.addEventListener('click', handlePaymentSubmit);
+        submitBtn.addEventListener('touchstart', handlePaymentSubmit);
+    </script>
+</body>
+</html>
