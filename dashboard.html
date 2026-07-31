@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahid SMM Panel - Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #343a40;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+        .main-container {
+            max-width: 650px;
+            margin: 25px auto;
+            padding: 0 15px;
+        }
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 18px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 8px;
+        }
+        .form-row {
+            margin-bottom: 18px;
+            position: relative;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #444;
+            font-size: 14px;
+        }
+        /* Custom Select Box Style (Looking like the screenshot) */
+        .custom-select-box {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            user-select: none;
+        }
+        .custom-select-box:after {
+            content: '▼';
+            font-size: 10px;
+            color: #666;
+        }
+        .dropdown-list {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-height: 220px;
+            overflow-y: auto;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            z-index: 99;
+            box-sizing: border-box;
+            margin-top: 4px;
+        }
+        .dropdown-item {
+            padding: 10px 12px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        .dropdown-item:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: #fff;
+            font-size: 14px;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .add-fund-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .add-fund-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Sahid SMM Panel</h1>
+        <div>
+            <a href="addfund.html" class="add-fund-btn">Add Funds</a>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="card">
+            <h3>New Order</h3>
+            
+            <div class="form-row">
+                <label>Category</label>
+                <div class="custom-select-box" id="category-box" onclick="toggleDropdown('category-dropdown')">
+                    <span id="selected-category-text">-- Select Category --</span>
+                </div>
+                <div class="dropdown-list" id="category-dropdown">
+                    <div class="dropdown-item" onclick="selectCategory('ig_followers_nd', '📷 Instagram Followers [Non-Drop - Lifetime Guarantee]')">📷 Instagram Followers [Non-Drop - Lifetime Guarantee]</div>
+                    <div class="dropdown-item" onclick="selectCategory('ig_followers_refill', '📷 Instagram Followers [30 Days Refill Enabled]')">📷 Instagram Followers [30 Days Refill Enabled]</div>
+                    <div class="dropdown-item" onclick="selectCategory('ig_likes_real', '📷 Instagram Real Indian Likes [Non-Drop]')">📷 Instagram Real Indian Likes [Non-Drop]</div>
+                    <div class="dropdown-item" onclick="selectCategory('ig_likes_fast', '📷 Instagram Super Fast Likes [Instant Start]')">📷 Instagram Super Fast Likes [Instant Start]</div>
+                    <div class="dropdown-item" onclick="selectCategory('ig_reels_views', '📷 Instagram Reels Views [Non-Drop - Explore Boost]')">📷 Instagram Reels Views [Non-Drop - Explore Boost]</div>
+                    <div class="dropdown-item" onclick="selectCategory('ig_reels_likes', '📷 Instagram Reels Likes [Active Profiles]')">📷 Instagram Reels Likes [Active Profiles]</div>
+                    <div class="dropdown-item" onclick="selectCategory('ig_comments_custom', '📷 Instagram Custom Comments [Verified Users]')">📷 Instagram Custom Comments [Verified Users]</div>
+                    <div class="dropdown-item" onclick="selectCategory('ig_story_views', '📷 Instagram Story Views [High Retention]')">📷 Instagram Story Views [High Retention]</div>
+                    <div class="dropdown-item" onclick="selectCategory('yt_subs_nd', '▶️ YouTube Subscribers [Non-Drop - Monetization Safe]')">▶️ YouTube Subscribers [Non-Drop - Monetization Safe]</div>
+                    <div class="dropdown-item" onclick="selectCategory('yt_views_retention', '▶️ YouTube High Retention Views [100% Non-Drop]')">▶️ YouTube High Retention Views [100% Non-Drop]</div>
+                    <div class="dropdown-item" onclick="selectCategory('yt_likes_video', '▶️ YouTube Video Likes [Real Engagement]')">▶️ YouTube Video Likes [Real Engagement]</div>
+                    <div class="dropdown-item" onclick="selectCategory('yt_shorts_views', '▶️ YouTube Shorts Views [Super Fast Speed]')">▶️ YouTube Shorts Views [Super Fast Speed]</div>
+                    <div class="dropdown-item" onclick="selectCategory('yt_watch_time', '▶️ YouTube Watch Time Hours [4000 Hours Safe]')">▶️ YouTube Watch Time Hours [4000 Hours Safe]</div>
+                    <div class="dropdown-item" onclick="selectCategory('tg_members_nd', '📢 Telegram Channel Members [Non-Drop - Active]')">📢 Telegram Channel Members [Non-Drop - Active]</div>
+                    <div class="dropdown-item" onclick="selectCategory('tg_post_views', '📢 Telegram Post Views [Last 10-50 Posts]')">📢 Telegram Post Views [Last 10-50 Posts]</div>
+                    <div class="dropdown-item" onclick="selectCategory('tg_reactions', '📢 Telegram Positive Reactions [👍 ❤️ 🔥]')">📢 Telegram Positive Reactions [👍 ❤️ 🔥]</div>
+                    <div class="dropdown-item" onclick="selectCategory('fb_page_likes', '📘 Facebook Page Likes & Followers [Non-Drop]')">📘 Facebook Page Likes & Followers [Non-Drop]</div>
+                    <div class="dropdown-item" onclick="selectCategory('fb_video_views', '📘 Facebook Video Views [High Retention]')">📘 Facebook Video Views [High Retention]</div>
+                    <div class="dropdown-item" onclick="selectCategory('tw_followers', '🐦 Twitter / X Followers [Non-Drop - Refill]')">🐦 Twitter / X Followers [Non-Drop - Refill]</div>
+                    <div class="dropdown-item" onclick="selectCategory('tk_followers', '🎵 TikTok Followers [Non-Drop - Worldwide]')">🎵 TikTok Followers [Non-Drop - Worldwide]</div>
+                    <div class="dropdown-item" onclick="selectCategory('spotify_plays', '🎧 Spotify Song Plays [Organic & Non-Drop]')">🎧 Spotify Song Plays [Organic & Non-Drop]</div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>Service</label>
+                <div class="custom-select-box" id="service-box" onclick="toggleDropdown('service-dropdown')">
+                    <span id="selected-service-text">-- Select Category First --</span>
+                </div>
+                <div class="dropdown-list" id="service-dropdown">
+                    </div>
+            </div>
+
+            <div class="form-row">
+                <label>Link</label>
+                <input type="text" id="order-link" placeholder="https://...">
+            </div>
+
+            <div class="form-row">
+                <label>Quantity</label>
+                <input type="number" id="order-quantity" placeholder="1000">
+            </div>
+
+            <button class="btn" onclick="alert('Order submitted successfully!')">Place Order</button>
+        </div>
+    </div>
+
+    <script>
+        // Data for Services (15-20 options per category)
+        const servicesData = {
+            ig_followers_nd: [
+                "1. IG Followers [Non-Drop] - Speed 5k/Day",
+                "2. IG Followers [Lifetime Guarantee] - Auto Refill",
+                "3. IG HQ Followers [Super Fast] - Non-Drop",
+                "4. IG Real Indian Followers [Non-Drop] - Active",
+                "5. IG Female Followers [Non-Drop] - Targeted",
+                "6. IG Male Followers [Non-Drop] - Premium",
+                "7. IG Drop-Free Followers [Max 100k]",
+                "8. IG Verified Badge Profile Followers [Non-Drop]",
+                "9. IG Business Profile Followers [Non-Drop]",
+                "10. IG Organic Boost Followers [Slow & Safe]",
+                "11. IG Mega Package Followers [Instant Start]",
+                "12. IG Ultra Secure Followers [Lifetime Warranty]",
+                "13. IG Top Creator Followers [High Retention]",
+                "14. IG Global Followers [24/7 Support]",
+                "15. IG Master Followers Pack [Non-Drop]"
+            ],
+            ig_followers_refill: [
+                "1. IG Followers [30 Days Refill Button] - Pack 1",
+                "2. IG Followers [30 Days Refill] - Pack 2",
+                "3. IG Active Followers [Refill Enabled] - Pack 3",
+                "4. IG Fast Followers [Refill 30D] - Pack 4",
+                "5. IG Indian Followers [Refill 30D] - Pack 5",
+                "6. IG Worldwide Followers [Refill 30D] - Pack 6",
+                "7. IG Non-Drop Followers [Refill 30D] - Pack 7",
+                "8. IG Safe Followers [Refill 30D] - Pack 8",
+                "9. IG Stable Followers [Refill 30D] - Pack 9",
+                "10. IG Organic Followers [Refill 30D] - Pack 10"
+            ],
+            ig_likes_real: [
+                "1. IG Real Indian Likes [Instant Start]",
+                "2. IG Active Indian Likes [Non-Drop]",
+                "3. IG Verified Indian Profile Likes",
+                "4. IG Organic Indian Likes [High Quality]",
+                "5. IG Female Indian Likes [Non-Drop]",
+                "6. IG Male Indian Likes [Non-Drop]",
+                "7. IG Local Indian Engagement Likes",
+                "8. IG Fast Indian Likes [Lifetime Safe]",
+                "9. IG Stable Indian Likes [No Drop]",
+                "10. IG Premium Indian Likes [Active]"
+            ],
+            ig_likes_fast: [
+                "1. IG Super Fast Likes [Instant Start]",
+                "2. IG Instant Delivery Likes [Non-Drop]",
+                "3. IG Rapid Speed Likes [High Quality]",
+                "4. IG Lightning Likes [Active Users]",
+                "5. IG Express Likes [Non-Drop]",
+                "6. IG Turbo Likes [Lifetime Safe]",
+                "7. IG Flash Likes [Instant Start]",
+                "8. IG Speed Boost Likes [Non-Drop]",
+                "9. IG Instant Engagement Likes",
+                "10. IG Quick Delivery Likes [Active]"
+            ],
+            ig_reels_views: [
+                "1. IG Reels Views [Non-Drop - Explore Boost]",
+                "2. IG Reels Views [Super Fast Speed]",
+                "3. IG Reels Views [High Retention 100%]",
+                "4. IG Reels Views [Organic Target]",
+                "5. IG Reels Views [Lifetime Guarantee]",
+                "6. IG Reels Views [Instant Start]",
+                "7. IG Reels Views [Active Audience]",
+                "8. IG Reels Views [Safe Delivery]",
+                "9. IG Reels Views [Max 1M Speed]",
+                "10. IG Reels Views [Global Reach]"
+            ],
+            ig_reels_likes: [
+                "1. IG Reels Likes [Active Profiles - Non-Drop]",
+                "2. IG Reels Likes [Instant Start]",
+                "3. IG Reels Likes [Real Users]",
+                "4. IG Reels Likes [High Quality]",
+                "5. IG Reels Likes [Lifetime Safe]",
+                "6. IG Reels Likes [Fast Speed]",
+                "7. IG Reels Likes [Organic Look]",
+                "8. IG Reels Likes [Safe Delivery]",
+                "9. IG Reels Likes [Targeted]",
+                "10. IG Reels Likes [Global]"
+            ],
+            ig_comments_custom: [
+                "1. IG Custom Comments [Your Text - Non-Drop]",
+                "2. IG Verified Users Custom Comments",
+                "3. IG Business Profile Custom Comments",
+                "4. IG Real User Custom Comments",
+                "5. IG English Custom Comments [Active]",
+                "6. IG Emoji + Custom Text Comments",
+                "7. IG Long Paragraph Custom Comments",
+                "8. IG Targeted Custom Comments",
+                "9. IG Fast Custom Comments [Instant]",
+                "10. IG Safe Custom Comments [Lifetime]"
+            ],
+            ig_story_views: [
+                "1. IG Story Views [High Retention - Non-Drop]",
+                "2. IG Story Views [Instant Delivery]",
+                "3. IG Story Views [Active Users]",
+                "4. IG Story Views [Fast Speed]",
+                "5. IG Story Views [Lifetime Safe]",
+                "6. IG Story Views [Global Reach]",
+                "7. IG Story Views [Organic Look]",
+                "8. IG Story Views [Safe Delivery]",
+                "9. IG Story Views [Targeted]",
+                "10. IG Story Views [Premium]"
+            ],
+            yt_subs_nd: [
+                "1. YT Monetization Safe Subscribers [Non-Drop]",
+                "2. YT Lifetime Guarantee Subscribers",
+                "3. YT High Retention Subscribers [Refill]",
+                "4. YT Real Users Subscribers [No Drop]",
+                "5. YT Active Channel Subscribers",
+                "6. YT Drop-Free Subscribers [Max Secure]",
+                "7. YT Premium Subscribers [Lifetime Safe]",
+                "8. YT Fast Delivery Subscribers [Non-Drop]",
+                "9. YT Global Audience Subscribers",
+                "10. YT Gaming Channel Subscribers"
+            ],
+            yt_views_retention: [
+                "1. YT High Retention Views [100% Non-Drop]",
+                "2. YT Long Video Views [Organic Speed]",
+                "3. YT Direct Search Views [Non-Drop]",
+                "4. YT Suggested Videos Views [Retention]",
+                "5. YT External Traffic Views [Safe]",
+                "6. YT Live Stream Views [Non-Drop]",
+                "7. YT Playlist Views [Automatic]",
+                "8. YT Mobile App Traffic Views",
+                "9. YT Desktop Traffic Views [High Quality]",
+                "10. YT Embedded Website Views"
+            ],
+            yt_likes_video: [
+                "1. YT Video Likes [Instant Start - Non-Drop]",
+                "2. YT Short Video Likes [High Quality]",
+                "3. YT Real User Likes [No Drop]",
+                "4. YT Live Stream Likes [Active]",
+                "5. YT Premier Video Likes [Non-Drop]",
+                "6. YT Music Video Likes [Organic]",
+                "7. YT Comments Likes [Top Boost]",
+                "8. YT Channel Trailer Likes",
+                "9. YT High Retention Likes [Lifetime]",
+                "10. YT Fast Delivery Likes [Non-Drop]"
+            ],
+            yt_shorts_views: [
+                "1. YT Shorts Views [Super Fast - Non-Drop]",
+                "2. YT Shorts Views [Instant Delivery]",
+                "3. YT Shorts Views [Viral Boost]",
+                "4. YT Shorts Views [High Retention]",
+                "5. YT Shorts Views [Organic Speed]",
+                "6. YT Shorts Views [Lifetime Safe]",
+                "7. YT Shorts Views [Active Users]",
+                "8. YT Shorts Views [Global Reach]",
+                "9. YT Shorts Views [Safe Delivery]",
+                "10. YT Shorts Views [Targeted]"
+            ],
+            yt_watch_time: [
+                "1. YT Watch Time 4000 Hours [Monetization Safe]",
+                "2. YT Long Hours Watch Time [1 Hour+]",
+                "3. YT Playlist Watch Time [Organic]",
+                "4. YT Live Stream Watch Time [Non-Drop]",
+                "5. YT High Retention Watch Time [Safe]",
+                "6. YT Fast Speed Watch Time",
+                "7. YT Organic Watch Time [Guaranteed]",
+                "8. YT Custom Video Length Watch Time",
+                "9. YT Premium Watch Time Package",
+                "10. YT 24/7 Streaming Watch Time"
+            ],
+            tg_members_nd: [
+                "1. TG Channel Members [Non-Drop - Active]",
+                "2. TG Group Members [Real & Online Boost]",
+                "3. TG Drop-Free Members [Lifetime Safe]",
+                "4. TG Premium Members [Verified]",
+                "5. TG Targeted Country Members",
+                "6. TG Crypto Channel Members [Active]",
+                "7. TG Trading Group Members",
+                "8. TG Airdrop Group Members",
+                "9. TG Gaming Community Members",
+                "10. TG Bot Users Members [Instant]"
+            ],
+            tg_post_views: [
+                "1. TG Post Views [Last 10 Posts - Instant]",
+                "2. TG Post Views [Last 20 Posts - Non-Drop]",
+                "3. TG Post Views [Last 50 Posts - Safe]",
+                "4. TG Auto Views For Future Posts [30D]",
+                "5. TG Auto Views For Future Posts [60D]",
+                "6. TG Auto Views For Future Posts [90D]",
+                "7. TG Reaction + Views Combo [Active]",
+                "8. TG Share Count Boost [Non-Drop]",
+                "9. TG Story Views [High Retention]",
+                "10. TG Poll Votes Views [Secure]"
+            ],
+            tg_reactions: [
+                "1. TG Positive Reactions [👍 ❤️ 🔥 - Instant]",
+                "2. TG Mixed Emoji Reactions [Non-Drop]",
+                "3. TG Custom Emoji Reactions [Active]",
+                "4. TG Thumbs Up Reactions [Non-Drop]",
+                "5. TG Heart Reactions [Lifetime Safe]",
+                "6. TG Fire & Star Reactions [High Quality]",
+                "7. TG Negative/Dislike Reactions [Custom]",
+                "8. TG All Emoji Reactions Pack",
+                "9. TG Fast Speed Reactions [Instant]",
+                "10. TG Premium Reactions [Verified]"
+            ],
+            fb_page_likes: [
+                "1. FB Page Likes & Followers [Non-Drop]",
+                "2. FB Page Likes [Super Fast Speed]",
+                "3. FB Page Followers [Lifetime Safe]",
+                "4. FB Professional Mode Followers",
+                "5. FB Public Figure Followers",
+                "6. FB Business Page Likes [Active]",
+                "7. FB Group Members [Non-Drop]",
+                "8. FB Event Attendees [Interested]",
+                "9. FB Page Recommendations Boost",
+                "10. FB Organic Growth Followers"
+            ],
+            fb_video_views: [
+                "1. FB Video Views [3 Seconds - Fast]",
+                "2. FB Video Views [1 Min Retention - Non-Drop]",
+                "3. FB Reels Views [Super Fast Speed]",
+                "4. FB Live Stream Views [Active]",
+                "5. FB Watch Time Hours [Monetization Safe]",
+                "6. FB Long Video Views [Non-Drop]",
+                "7. FB Story Views [Instant Delivery]",
+                "8. FB Premier Video Views [Lifetime]",
+                "9. FB Gaming Video Views [Safe]",
+                "10. FB Viral Video Views [Organic]"
+            ],
+            tw_followers: [
+                "1. Twitter / X Followers [Non-Drop - Refill]",
+                "2. X / Twitter HQ Followers [Active]",
+                "3. Twitter NFT/Crypto Followers [Safe]",
+                "4. Twitter Verified Badge Followers",
+                "5. Twitter Fast Speed Followers [Lifetime]",
+                "6. Twitter Targeted Country Followers",
+                "7. Twitter Organic Growth Followers",
+                "8. Twitter Business Followers [Non-Drop]",
+                "9. Twitter Creator Followers [High Quality]",
+                "10. Twitter Drop-Free Followers [Secure]"
+            ],
+            tk_followers: [
+                "1. TikTok Followers [Non-Drop - Worldwide]",
+                "2. TikTok HQ Followers [Active Profiles]",
+                "3. TikTok Live Stream Access Followers",
+                "4. TikTok Verified Profile Followers",
+                "5. TikTok Fast Speed Followers [Lifetime]",
+                "6. TikTok Targeted Country Followers",
+                "7. TikTok Drop-Free Followers [Secure]",
+                "8. TikTok Organic Growth Followers",
+                "9. TikTok Creator Followers [High Quality]",
+                "10. TikTok Mega Package Followers"
+            ],
+            spotify_plays: [
+                "1. Spotify Song Plays [Organic & Non-Drop]",
+                "2. Spotify Monthly Listeners [Safe]",
+                "3. Spotify Album Plays [Complete Streams]",
+                "4. Spotify Playlist Plays [Targeted]",
+                "5. Spotify Viral Tracks Plays [Fast]",
+                "6. Spotify USA/Global Plays [Non-Drop]",
+                "7. Spotify Chart Ranking Plays [Lifetime]",
+                "8. Spotify Radio Plays [Active]",
+                "9. Spotify Algorithmic Plays [Organic]",
+                "10. Spotify Premium Streams [Safe]"
+            ]
+        };
+
+        // Toggle custom dropdown visibility
+        function toggleDropdown(dropdownId) {
+            const dropdown = document.getElementById(dropdownId);
+            // Close other dropdowns
+            document.querySelectorAll('.dropdown-list').forEach(d => {
+                if(d.id !== dropdownId) d.style.display = 'none';
+            });
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Select Category Function
+        function selectCategory(categoryKey, categoryName) {
+            document.getElementById('selected-category-text').innerText = categoryName;
+            document.getElementById('category-dropdown').style.display = 'none';
+            
+            // Update Services List
+            const servDropdown = document.getElementById('service-dropdown');
+            servDropdown.innerHTML = '';
+            document.getElementById('selected-service-text').innerText = '-- Select Service --';
+
+            if (servicesData[categoryKey]) {
+                servicesData[categoryKey].forEach(service => {
+                    const item = document.createElement('div');
+                    item.className = 'dropdown-item';
+                    item.innerText = service;
+                    item.onclick = function() {
+                        selectService(service);
+                    };
+                    servDropdown.appendChild(item);
+                });
+            }
+        }
+
+        // Select Service Function
+        function selectService(serviceName) {
+            document.getElementById('selected-service-text').innerText = serviceName;
+            document.getElementById('service-dropdown').style.display = 'none';
+        }
+
+        // Close dropdowns when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.closest('.form-row')) {
+                document.querySelectorAll('.dropdown-list').forEach(d => {
+                    d.style.display = 'none';
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>
