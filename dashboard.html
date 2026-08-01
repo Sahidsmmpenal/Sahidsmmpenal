@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahid SMM - Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Urbanist', sans-serif;
+        }
+
+        body {
+            background-color: #0b0e14;
+            color: #ffffff;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 260px;
+            background-color: #121821;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .logo-area {
+            font-size: 24px;
+            font-weight: 700;
+            color: #deff9a;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .nav-links li a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 16px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links li.active a, .nav-links li a:hover {
+            background-color: #deff9a;
+            color: #000000;
+            font-weight: 600;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Top Header */
+        header {
+            background-color: #121821;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #1a222f;
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(222, 255, 154, 0.2);
+        }
+
+        .user-profile i {
+            color: #deff9a;
+            font-size: 18px;
+        }
+
+        .user-profile span {
+            font-size: 15px;
+            font-weight: 600;
+            color: #daffde;
+        }
+
+        /* Dashboard Body Content */
+        .dashboard-body {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            background-color: #121821;
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .stat-card h4 {
+            color: #94a3b8;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .stat-card .value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #deff9a;
+        }
+
+        /* Quick Order Section */
+        .order-section {
+            background-color: #121821;
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .order-section h3 {
+            font-size: 22px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .form-group select, .form-group input {
+            background-color: #1a222f;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .form-group select:focus, .form-group input:focus {
+            border-color: #deff9a;
+        }
+
+        .submit-btn {
+            background-color: #deff9a;
+            color: #000000;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div>
+            <div class="logo-area">
+                <i class="fa-solid fa-bolt"></i> Sahid SMM
+            </div>
+            <ul class="nav-links">
+                <li class="active"><a href="dashboard.html"><i class="fa-solid fa-house"></i> New Order</a></li>
+                <li><a href="orders.html"><i class="fa-solid fa-list-check"></i> Orders</a></li>
+                <li><a href="services.html"><i class="fa-solid fa-layer-group"></i> Services</a></li>
+                <li><a href="addfund.html"><i class="fa-solid fa-wallet"></i> Add Funds</a></li>
+                <li><a href="tickets.html"><i class="fa-solid fa-headset"></i> Support Tickets</a></li>
+                <li><a href="api.html"><i class="fa-solid fa-code"></i> API</a></li>
+                <li><a href="affiliates.html"><i class="fa-solid fa-user-plus"></i> Affiliates</a></li>
+            </ul>
+        </div>
+        <div style="color: #94a3b8; font-size: 13px; text-align: center;">
+            &copy; 2026 Sahid SMM
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>Dashboard</h2>
+            <div class="user-profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <span id="loggedUser">user@gmail.com</span>
+            </div>
+        </header>
+
+        <div class="dashboard-body">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h4>Account Balance</h4>
+                    <div class="value">₹0.00</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Total Spent</h4>
+                    <div class="value">₹0.00</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Total Orders</h4>
+                    <div class="value">0</div>
+                </div>
+            </div>
+
+            <div class="order-section">
+                <h3>Create New Order</h3>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select>
+                        <option>Instagram Followers [Non-Drop | 100% Real]</option>
+                        <option>YouTube Subscribers [Refill Enabled]</option>
+                        <option>Telegram Channel Members [Indian Target]</option>
+                        <option>Facebook Page Likes & Followers</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Service</label>
+                    <select>
+                        <option>Instagram Followers - Max 50K - Speed 10K/Day</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Link</label>
+                    <input type="text" placeholder="https://instagram.com/yourprofile">
+                </div>
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" placeholder="1000">
+                </div>
+                <button class="submit-btn">Place Order</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ডাইনামিক ইউজারনেম বা জিমেইল সেট করার জন্য জাভাস্ক্রিপ্ট কোড (সেশন বা লোকালস্টোরেজ থেকে ফেচ করবে)
+        const username = localStorage.getItem('username') || sessionStorage.getItem('username') || 'sahid_user@gmail.com';
+        document.getElementById('loggedUser').innerText = username;
+    </script>
+</body>
+</html>
