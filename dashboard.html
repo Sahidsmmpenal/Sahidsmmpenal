@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahid Ultimate Enterprise SMM & Admin Console - v3.5</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#050811',
+                        cardbg: '#0d1322',
+                        bordercol: '#1e293b',
+                        accentindigo: '#6366f1',
+                        accentemerald: '#10b981'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #050811; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        .glow-effect { box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.15); }
+    </style>
+</head>
+<body class="bg-darkbg text-slate-100 min-h-screen flex flex-col justify-between antialiased selection:bg-indigo-600 selection:text-white">
+
+    <header class="bg-cardbg/95 backdrop-blur-xl border-b border-bordercol sticky top-0 z-50 px-4 lg:px-8 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3.5">
+                <div class="bg-gradient-to-tr from-indigo-600 via-violet-600 to-indigo-500 p-3 rounded-2xl shadow-xl shadow-indigo-600/25 glow-effect">
+                    <i class="fa-solid fa-server text-white text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-base font-extrabold tracking-tight text-white flex items-center">
+                        SAHID <span class="text-indigo-400 ml-1.5 font-black">ENTERPRISE</span>
+                    </h1>
+                    <span class="text-[11px] text-emerald-400 font-bold flex items-center tracking-wide">
+                        <span class="w-2 h-2 bg-emerald-400 rounded-full animate-ping mr-2"></span> System Online & Secured (Node v20.5)
+                    </span>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <div class="hidden md:flex items-center space-x-2 bg-slate-900/80 border border-bordercol px-3.5 py-2 rounded-xl text-xs text-slate-300">
+                    <i class="fa-solid fa-clock text-indigo-400"></i>
+                    <span id="live-clock">Loading Time...</span>
+                </div>
+                <div class="relative">
+                    <button onclick="triggerGlobalNotificationModal()" class="p-3 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-300 border border-bordercol transition relative shadow-sm">
+                        <i class="fa-solid fa-bell text-sm"></i>
+                        <span class="absolute top-2 right-2 w-2.5 h-2.5 bg-indigo-500 rounded-full ring-2 ring-cardbg"></span>
+                    </button>
+                </div>
+                <div class="flex items-center space-x-2.5 bg-slate-900/90 border border-bordercol px-3.5 py-1.5 rounded-xl shadow-sm">
+                    <div class="w-8 h-8 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold text-xs flex items-center justify-center shadow-md">AS</div>
+                    <div class="hidden sm:block text-left">
+                        <p class="text-xs font-bold text-slate-200">Sahid Developer</p>
+                        <p class="text-[10px] text-indigo-400 font-semibold">Master Admin</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 lg:px-8 py-8 w-full flex-grow space-y-8">
+
+        <div id="enterprise-toast" class="hidden bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 px-5 py-4 rounded-2xl flex items-center justify-between shadow-2xl transition-all duration-300">
+            <div class="flex items-center space-x-3.5">
+                <div class="p-2.5 bg-emerald-500/20 rounded-xl text-emerald-400"><i class="fa-solid fa-circle-check text-xl"></i></div>
+                <div>
+                    <p class="text-sm font-bold tracking-wide">Real-Time Database Event Triggered!</p>
+                    <p class="text-xs text-emerald-400/80 font-medium" id="toast-dynamic-desc">Client successfully verified payment. Order queued automatically.</p>
+                </div>
+            </div>
+            <button onclick="dismissToast()" class="text-emerald-400 hover:text-white p-2 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="bg-cardbg border border-bordercol rounded-3xl p-6 shadow-xl relative overflow-hidden group hover:border-indigo-500/50 transition">
+                <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition"></div>
+                <div class="flex justify-between items-center text-slate-400 mb-3.5">
+                    <span class="text-xs font-bold uppercase tracking-wider">Total Vault Balance</span>
+                    <div class="p-3 rounded-2xl bg-emerald-500/10 text-emerald-400"><i class="fa-solid fa-wallet text-base"></i></div>
+                </div>
+                <h3 class="text-3xl font-black text-emerald-400 mb-1 tracking-tight" id="vault-balance">৳18,450.00</h3>
+                <span class="text-xs text-slate-500 font-semibold flex items-center"><i class="fa-solid fa-arrow-trend-up text-emerald-400 mr-1.5"></i> +24.8% this month</span>
+            </div>
+
+            <div class="bg-cardbg border border-bordercol rounded-3xl p-6 shadow-xl relative overflow-hidden group hover:border-indigo-500/50 transition">
+                <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-indigo-500/5 rounded-full blur-3xl group-hover:bg-indigo-500/10 transition"></div>
+                <div class="flex justify-between items-center text-slate-400 mb-3.5">
+                    <span class="text-xs font-bold uppercase tracking-wider">Total Processed Orders</span>
+                    <div class="p-3 rounded-2xl bg-indigo-500/10 text-indigo-400"><i class="fa-solid fa-cart-shopping text-base"></i></div>
+                </div>
+                <h3 class="text-3xl font-black text-white mb-1 tracking-tight" id="enterprise-orders">5,892</h3>
+                <span class="text-xs text-indigo-400 font-semibold flex items-center"><i class="fa-solid fa-bolt text-indigo-400 mr-1.5"></i> 214 currently active</span>
+            </div>
+
+            <div class="bg-cardbg border border-bordercol rounded-3xl p-6 shadow-xl relative overflow-hidden group hover:border-indigo-500/50 transition">
+                <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl group-hover:bg-amber-500/10 transition"></div>
+                <div class="flex justify-between items-center text-slate-400 mb-3.5">
+                    <span class="text-xs font-bold uppercase tracking-wider">Pending Approvals</span>
+                    <div class="p-3 rounded-2xl bg-amber-500/10 text-amber-400"><i class="fa-solid fa-clock-rotate-left text-base"></i></div>
+                </div>
+                <h3 class="text-3xl font-black text-amber-400 mb-1 tracking-tight" id="enterprise-pending">14</h3>
+                <span class="text-xs text-slate-500 font-semibold flex items-center"><i class="fa-solid fa-triangle-exclamation text-amber-400 mr-1.5"></i> Requires manual UTR check</span>
+            </div>
+
+            <div class="bg-cardbg border border-bordercol rounded-3xl p-6 shadow-xl relative overflow-hidden group hover:border-indigo-500/50 transition">
+                <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl group-hover:bg-blue-500/10 transition"></div>
+                <div class="flex justify-between items-center text-slate-400 mb-3.5">
+                    <span class="text-xs font-bold uppercase tracking-wider">Active Client Base</span>
+                    <div class="p-3 rounded-2xl bg-blue-500/10 text-blue-400"><i class="fa-solid fa-users text-base"></i></div>
+                </div>
+                <h3 class="text-3xl font-black text-white mb-1 tracking-tight" id="enterprise-users">1,240</h3>
+                <span class="text-xs text-blue-400 font-semibold flex items-center"><i class="fa-solid fa-shield-halved text-blue-400 mr-1.5"></i> 99.9% uptime index</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <div class="lg:col-span-2 space-y-8">
+                
+                <div class="bg-cardbg border border-bordercol rounded-3xl p-7 shadow-xl">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h2 class="text-lg font-extrabold text-white tracking-wide">Enterprise Payment Trigger Console</h2>
+                            <p class="text-xs text-slate-400">Simulate incoming user payments and test instant multi-threaded database alerts.</p>
+                        </div>
+                        <span class="px-3.5 py-1 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-bold rounded-full">API Connected</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <button onclick="executeAdvancedPaidSimulation()" class="w-full bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-extrabold py-4 px-5 rounded-2xl shadow-xl shadow-indigo-600/25 transition active:scale-95 flex items-center justify-center space-x-2.5">
+                            <i class="fa-solid fa-paper-plane text-sm"></i>
+                            <span>Simulate 'I Have Paid' Trigger</span>
+                        </button>
+                        <button onclick="resetEnterpriseDatabase()" class="w-full bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold py-4 px-5 rounded-2xl border border-bordercol transition active:scale-95 flex items-center justify-center space-x-2.5 shadow-sm">
+                            <i class="fa-solid fa-rotate-right text-sm"></i>
+                            <span>Reset System Metrics</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-cardbg border border-bordercol rounded-3xl p-7 shadow-xl">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-base font-extrabold text-white tracking-wide">High-Performance Service Hub</h2>
+                        <span class="text-xs text-indigo-400 font-bold cursor-pointer hover:underline">Manage Catalog &rarr;</span>
+                    </div>
+
+                    <div class="space-y-3.5">
+                        <div class="flex justify-between items-center bg-darkbg p-4.5 rounded-2xl border border-bordercol hover:border-slate-700 transition">
+                            <div class="flex items-center space-x-3.5">
+                                <div class="bg-pink-500/10 p-3 rounded-2xl text-pink-400 shadow-inner"><i class="fa-brands fa-instagram text-xl"></i></div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-slate-200">Instagram Premium Non-Drop Followers</h4>
+                                    <span class="text-xs text-slate-500">Speed: 25k/day • Lifetime Guarantee • Real Accounts</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-indigo-400 font-black text-sm">৳120</span>
+                                <span class="text-[10px] text-slate-500 block">per 1,000 units</span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center bg-darkbg p-4.5 rounded-2xl border border-bordercol hover:border-slate-700 transition">
+                            <div class="flex items-center space-x-3.5">
+                                <div class="bg-blue-500/10 p-3 rounded-2xl text-blue-400 shadow-inner"><i class="fa-brands fa-facebook text-xl"></i></div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-slate-200">Facebook Page Verified Likes & Follows</h4>
+                                    <span class="text-xs text-slate-500">Instant Start • 100% Safe • Non-Drop Guarantee</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-indigo-400 font-black text-sm">৳250</span>
+                                <span class="text-[10px] text-slate-500 block">per 1,000 units</span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center bg-darkbg p-4.5 rounded-2xl border border-bordercol hover:border-slate-700 transition">
+                            <div class="flex items-center space-x-3.5">
+                                <div class="bg-red-500/10 p-3 rounded-2xl text-red-400 shadow-inner"><i class="fa-brands fa-youtube text-xl"></i></div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-slate-200">YouTube Monetizable Watchtime Hours</h4>
+                                    <span class="text-xs text-slate-500">Organic Traffic • High Retention • Secure API</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-indigo-400 font-black text-sm">৳750</span>
+                                <span class="text-[10px] text-slate-500 block">per 1,000 units</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="space-y-8">
+                
+                <div class="bg-cardbg border border-bordercol rounded-3xl p-7 shadow-xl">
+                    <div class="flex justify-between items-center mb-5">
+                        <h2 class="text-base font-extrabold text-white tracking-wide">Registered Accounts</h2>
+                        <span class="text-xs bg-indigo-500/10 text-indigo-400 px-2.5 py-1 rounded-lg font-bold">1,240 Total</span>
+                    </div>
+
+                    <div class="space-y-3" id="enterprise-user-container">
+                        <div class="flex items-center justify-between bg-darkbg p-4 rounded-2xl border border-bordercol">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-9 h-9 rounded-xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center font-black text-xs shadow-sm">SD</div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-200">sahid.enterprise@gmail.com</p>
+                                    <span class="text-[10px] text-slate-500 font-medium">Active Session • 30s ago</span>
+                                </div>
+                            </div>
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 ring-4 ring-emerald-400/10"></span>
+                        </div>
+
+                        <div class="flex items-center justify-between bg-darkbg p-4 rounded-2xl border border-bordercol">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-9 h-9 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center font-black text-xs shadow-sm">RK</div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-200">rahul.reseller99@gmail.com</p>
+                                    <span class="text-[10px] text-slate-500 font-medium">Active Session • 12m ago</span>
+                                </div>
+                            </div>
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 ring-4 ring-emerald-400/10"></span>
+                        </div>
+
+                        <div class="flex items-center justify-between bg-darkbg p-4 rounded-2xl border border-bordercol">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-9 h-9 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center font-black text-xs shadow-sm">TN</div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-200">tanvir.marketing@gmail.com</p>
+                                    <span class="text-[10px] text-slate-500 font-medium">Idle Mode • 1h ago</span>
+                                </div>
+                            </div>
+                            <span class="w-2.5 h-2.5 rounded-full bg-amber-400 ring-4 ring-amber-400/10"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-cardbg border border-bordercol rounded-3xl p-7 shadow-xl">
+                    <h2 class="text-base font-extrabold text-white mb-5 tracking-wide">Live Enterprise Audit Log</h2>
+                    <div class="space-y-3 text-xs" id="enterprise-log-box">
+                        <div class="p-3.5 bg-darkbg rounded-2xl border border-bordercol flex items-start space-x-3 shadow-sm">
+                            <i class="fa-solid fa-shield-halved text-indigo-400 mt-0.5 text-sm"></i>
+                            <div>
+                                <p class="text-slate-200 font-semibold">SSL Encryption Handshake Verified</p>
+                                <span class="text-[10px] text-slate-500 font-medium">Just now • Node Server Alpha</span>
+                            </div>
+                        </div>
+                        <div class="p-3.5 bg-darkbg rounded-2xl border border-bordercol flex items-start space-x-3 shadow-sm">
+                            <i class="fa-solid fa-circle-check text-emerald-400 mt-0.5 text-sm"></i>
+                            <div>
+                                <p class="text-slate-200 font-semibold">Payment Gateway Synchronized Successfully</p>
+                                <span class="text-[10px] text-slate-500 font-medium">4 mins ago • Gateway ID #8892</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="bg-cardbg border-t border-bordercol py-6 px-4 text-center text-xs text-slate-500 font-medium">
+        <p>&copy; 2026 Sahid Enterprise Console. Built for High-Speed Performance & Real-Time Tracking. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        let enterprisePending = 14;
+        let enterpriseOrdersCount = 5892;
+
+        // Real-Time Live Clock Engine
+        function updateLiveClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            document.getElementById('live-clock').innerText = timeString;
+        }
+        setInterval(updateLiveClock, 1000);
+        updateLiveClock();
+
+        function executeAdvancedPaidSimulation() {
+            enterprisePending++;
+            enterpriseOrdersCount++;
+            
+            document.getElementById('enterprise-pending').innerText = enterprisePending;
+            document.getElementById('enterprise-orders').innerText = enterpriseOrdersCount;
+
+            // Trigger Toast Banner
+            const toast = document.getElementById('enterprise-toast');
+            toast.classList.remove('hidden');
+
+            // Prepend new enterprise log
+            const logBox = document.getElementById('enterprise-log-box');
+            const newLog = document.createElement('div');
+            newLog.className = 'p-3.5 bg-darkbg rounded-2xl border border-bordercol flex items-start space-x-3 shadow-sm animate-pulse';
+            newLog.innerHTML = `
+                <i class="fa-solid fa-bolt text-amber-400 mt-0.5 text-sm"></i>
+                <div>
+                    <p class="text-slate-200 font-semibold">Client triggered 'I Have Paid' instant webhook alert</p>
+                    <span class="text-[10px] text-slate-500 font-medium">Just now • Automated Dispatch</span>
+                </div>
+            `;
+            logBox.prepend(newLog);
+
+            // Auto dismiss toast after 4.5 seconds
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 4500);
+        }
+
+        function resetEnterpriseDatabase() {
+            enterprisePending = 5;
+            document.getElementById('enterprise-pending').innerText = enterprisePending;
+            alert("Enterprise Database metrics reset successfully!");
+        }
+
+        function dismissToast() {
+            document.getElementById('enterprise-toast').classList.add('hidden');
+        }
+
+        function triggerGlobalNotificationModal() {
+            alert("Enterprise Notification Center: All webhook endpoints are active. 0 failed connections.");
+        }
+    </script>
+</body>
+</html>
