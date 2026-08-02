@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahid SMM Panel - Professional & Secure Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #1e40af;
+            --accent-blue: #2563eb;
+            --bg-gradient: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --ig-color: #e1306c;
+            --fb-color: #1877f2;
+            --yt-color: #ff0000;
+            --wa-color: #25d366;
+            --tw-color: #1da1f2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .logo-area i {
+            background: var(--accent-blue);
+            color: #fff;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        .hero-section {
+            background: var(--bg-gradient);
+            color: #ffffff;
+            text-align: center;
+            padding: 60px 20px 80px;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+        }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .hero-section p {
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.95;
+        }
+
+        .auth-container {
+            background: var(--card-bg);
+            color: var(--text-main);
+            max-width: 420px;
+            margin: -40px auto 40px;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+            text-align: left;
+        }
+
+        .auth-container h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--primary-blue);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-muted);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .btn-primary-custom {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent-blue);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-primary-custom:hover {
+            background: var(--primary-blue);
+        }
+
+        #alertBox {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            display: none;
+            text-align: center;
+        }
+
+        .google-signin-box {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .google-btn-custom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 10px 15px;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        .google-btn-custom:hover {
+            background: #f8fafc;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .google-btn-custom img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .service-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 14px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+        }
+
+        .service-box .icon-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #fff;
+        }
+
+        .service-box.instagram .icon-circle { background: var(--ig-color); }
+        .service-box.facebook .icon-circle { background: var(--fb-color); }
+        .service-box.youtube .icon-circle { background: var(--yt-color); }
+        .service-box.whatsapp .icon-circle { background: var(--wa-color); }
+        .service-box.twitter .icon-circle { background: var(--tw-color); }
+
+        .service-box h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .service-box p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            font-size: 0.9rem;
+        }
+
+        footer span {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 { font-size: 2rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <i class="fa-solid fa-bolt"></i>
+            Sahid SMM Panel
+        </div>
+        <div class="nav-links">
+            <a href="#services">Services</a>
+            <a href="#features">Why Us</a>
+            <a href="#contact">Support</a>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <h1>India's No.1 Cheapest & Best SMM Panel</h1>
+        <p>Start growing your Instagram, Facebook, YouTube, WhatsApp & Twitter presence with instant delivery and professional tools starting from ₹10!</p>
+    </section>
+
+    <div class="auth-container">
+        <h3>Login to Your Account</h3>
+        <div id="alertBox"></div>
+        <form id="loginForm">
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="emailInput" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="passwordInput" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="btn-primary-custom" id="emailLoginBtn">Sign In</button>
+        </form>
+
+        <div class="google-signin-box">
+            <button class="google-btn-custom" id="googleLoginBtn" type="button">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
+                <span>Sign in with Google</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="container" id="services">
+        <div class="section-header">
+            <h2>Our Specialized Services</h2>
+            <p>Explore top-tier social media growth packages tailored for creators & resellers</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-box instagram">
+                <div class="icon-circle"><i class="fa-brands fa-instagram"></i></div>
+                <h3>Instagram Growth</h3>
+                <p>Followers starting at ₹10, Reel Views, Likes, Comments, and Story Reach with high retention.</p>
+            </div>
+            <div class="service-box facebook">
+                <div class="icon-circle"><i class="fa-brands fa-facebook-f"></i></div>
+                <h3>Facebook Services</h3>
+                <p>Page followers, post reactions, video views, and group members at lowest wholesale rates.</p>
+            </div>
+            <div class="service-box youtube">
+                <div class="icon-circle"><i class="fa-brands fa-youtube"></i></div>
+                <h3>YouTube Promotion</h3>
+                <p>Monetization-ready watch time, genuine subscribers, likes, and fast views.</p>
+            </div>
+            <div class="service-box whatsapp">
+                <div class="icon-circle"><i class="fa-brands fa-whatsapp"></i></div>
+                <h3>WhatsApp Channels</h3>
+                <p>Increase channel members, interaction rates, views, and reach safely and organically.</p>
+            </div>
+            <div class="service-box twitter">
+                <div class="icon-circle"><i class="fa-brands fa-twitter"></i></div>
+                <h3>Twitter / X Boost</h3>
+                <p>Active followers, retweets, and post likes to make your tweets trend worldwide.</p>
+            </div>
+        </div>
+    </div>
+
+    <a href="https://wa.me/910000000000" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <footer>
+        <p>&copy; 2026 <span>Sahid SMM Panel</span>. All rights reserved. Professional & Secure SMM Solutions.</p>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBELsMTiY8OqZE5zJqwUThrfUCSu13gG7U",
+            authDomain: "sahidsmmpenal.firebaseapp.com",
+            databaseURL: "https://sahidsmmpenal-default-rtdb.firebaseio.com",
+            projectId: "sahidsmmpenal",
+            storageBucket: "sahidsmmpenal.firebasestorage.app",
+            messagingSenderId: "278872394021",
+            appId: "1:278872394021:web:0309da42a62c36195472cc",
+            measurementId: "G-B17NWVEBP3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        const alertBox = document.getElementById('alertBox');
+
+        function showAlert(message, type) {
+            alertBox.style.display = 'block';
+            alertBox.innerText = message;
+            alertBox.style.backgroundColor = type === 'error' ? '#fee2e2' : '#dcfce7';
+            alertBox.style.color = type === 'error' ? '#991b1b' : '#166534';
+            alertBox.style.border = type === 'error' ? '1px solid #fca5a5' : '1px solid #86efac';
+        }
+
+        // Google Sign In Handler
+        document.getElementById('googleLoginBtn').addEventListener('click', async () => {
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                showAlert("Google Login Successful! Redirecting...", "success");
+                setTimeout(() => {
+                    window.location.href = "dashboard.html";
+                }, 1200);
+            } catch (error) {
+                console.error("Google Auth Error:", error.message);
+                showAlert("Google Sign-In Failed: " + error.message, "error");
+            }
+        });
+
+        // Email & Password Sign In Handler
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passwordInput5').value || document.getElementById('passwordInput').value;
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                showAlert("Login Successful! Redirecting...", "success");
+                setTimeout(() => {
+                    window.location.href = "dashboard.html";
+                }, 1200);
+            } catch (error) {
+                console.error("Login Error:", error.code);
+                let errorMsg = "Invalid credentials!";
+                if (error.code === 'auth/wrong-password') {
+                    errorMsg = "Incorrect password! Please check your password.";
+                } else if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+                    errorMsg = "Account not found or incorrect details!";
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMsg = "Please enter a valid email address.";
+                } else {
+                    errorMsg = error.message;
+                }
+                showAlert(errorMsg, "error");
+            }
+        });
+    </script>
+</body>
+</html>
